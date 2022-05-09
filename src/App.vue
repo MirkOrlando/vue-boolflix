@@ -1,26 +1,20 @@
 <template>
   <div id="app">
     <SiteHeader />
-    <main>
-      <ul style="padding: 1rem" v-for="movie in movies" :key="movie.id">
-        <li><strong>Titolo:</strong> {{ movie.title }}</li>
-        <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
-        <li><strong>Lingua:</strong> {{ movie.original_language }}</li>
-        <li><strong>Voto:</strong> {{ movie.vote_average }}</li>
-      </ul>
-    </main>
+    <SiteMain />
     <footer>Site Footer Here</footer>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import SiteHeader from "@/components/SiteHeaderComponent.vue";
+import SiteMain from "@/components/SiteMainComponent.vue";
 
 export default {
   name: "App",
   components: {
     SiteHeader,
+    SiteMain,
   },
 };
 </script>

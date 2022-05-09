@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import state from "@/state.js";
 
 export default {
@@ -44,6 +45,8 @@ export default {
           this.loading = false;
           state.movies = this.movies;
           state.loading = this.loading;
+          console.log(state.movies);
+          console.log(state.loading);
         })
         .catch((error) => {
           //console.log(error);
