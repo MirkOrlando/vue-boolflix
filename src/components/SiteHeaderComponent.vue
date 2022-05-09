@@ -36,6 +36,19 @@ export default {
       this.query = "";
       return fullLink;
     },
+    getLanguageFlag() {
+      state.movies.forEach((movie) => {
+        switch (true) {
+          case movie.original_language.toLowerCase() === "it":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "it";
+            break;
+
+          default:
+            break;
+        }
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPI())
@@ -45,8 +58,9 @@ export default {
           this.loading = false;
           state.movies = this.movies;
           state.loading = this.loading;
-          console.log(state.movies);
-          console.log(state.loading);
+          //console.log(state.movies);
+          //console.log(state.loading);
+          this.getLanguageFlag();
         })
         .catch((error) => {
           //console.log(error);
