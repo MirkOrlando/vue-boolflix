@@ -11,7 +11,7 @@
         </span>
         <span v-else>{{ movie.original_language }}</span>
       </li>
-      <li><strong>Voto:</strong> {{ movie.vote_average }}</li>
+      <li><strong>Voto:</strong> <span v-html="movie.rating"></span></li>
     </ul>
     <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
       <li><img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" /></li>
@@ -24,7 +24,7 @@
         </span>
         <span v-else>{{ tvShow.original_language }}</span>
       </li>
-      <li><strong>Voto:</strong> {{ tvShow.vote_average }}</li>
+      <li><strong>Voto:</strong> <span v-html="tvShow.rating"></span></li>
     </ul>
   </main>
 </template>

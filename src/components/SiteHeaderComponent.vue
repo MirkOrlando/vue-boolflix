@@ -133,6 +133,63 @@ export default {
         tvShow.fullLinkPoster = this.linkImgPoster + tvShow.poster_path;
       });
     },
+    getRatingTvShows() {
+      state.tvShows.forEach((tvShow) => {
+        switch (true) {
+          case Math.ceil(tvShow.vote_average) === 1 ||
+            Math.ceil(tvShow.vote_average) === 2:
+            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(tvShow.vote_average) === 3 ||
+            Math.ceil(tvShow.vote_average) === 4:
+            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(tvShow.vote_average) === 5 ||
+            Math.ceil(tvShow.vote_average) === 6:
+            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(tvShow.vote_average) === 7 ||
+            Math.ceil(tvShow.vote_average) === 8:
+            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(tvShow.vote_average) === 9 ||
+            Math.ceil(tvShow.vote_average) === 10:
+            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          default:
+            break;
+        }
+      });
+    },
+    getRatingMovies() {
+      state.movies.forEach((movie) => {
+        switch (true) {
+          case Math.ceil(movie.vote_average) === 1 ||
+            Math.ceil(movie.vote_average) === 2:
+            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(movie.vote_average) === 3 ||
+            Math.ceil(movie.vote_average) === 4:
+            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(movie.vote_average) === 5 ||
+            Math.ceil(movie.vote_average) === 6:
+            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(movie.vote_average) === 7 ||
+            Math.ceil(movie.vote_average) === 8:
+            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          case Math.ceil(movie.vote_average) === 9 ||
+            Math.ceil(movie.vote_average) === 10:
+            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            break;
+          default:
+            break;
+        }
+      });
+    },
+
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -148,6 +205,7 @@ export default {
           //console.log(state.loading);
           this.getLanguageFlagMovie();
           this.getLinkImgMovies();
+          this.getRatingMovies();
         })
         .catch((error) => {
           //console.log(error);
@@ -165,6 +223,7 @@ export default {
           state.tvShows = this.tvShows;
           this.getLanguageFlagTvShow();
           this.getLinkImgTvShows();
+          this.getRatingTvShows();
         })
         .catch((error) => {
           //console.log(error);
@@ -182,6 +241,6 @@ header {
   text-align: center;
   padding: 1rem 0;
   background-color: $darkestColor;
-  border-bottom: 10px solid $liteDarkColor;
+  border-bottom: 10px regular $liteDarkColor;
 }
 </style>
