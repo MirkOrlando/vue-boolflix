@@ -133,63 +133,72 @@ export default {
         tvShow.fullLinkPoster = this.linkImgPoster + tvShow.poster_path;
       });
     },
-    getRatingTvShows() {
-      state.tvShows.forEach((tvShow) => {
-        switch (true) {
-          case Math.ceil(tvShow.vote_average) === 1 ||
-            Math.ceil(tvShow.vote_average) === 2:
-            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
-            break;
-          case Math.ceil(tvShow.vote_average) === 3 ||
-            Math.ceil(tvShow.vote_average) === 4:
-            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
-            break;
-          case Math.ceil(tvShow.vote_average) === 5 ||
-            Math.ceil(tvShow.vote_average) === 6:
-            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
-            break;
-          case Math.ceil(tvShow.vote_average) === 7 ||
-            Math.ceil(tvShow.vote_average) === 8:
-            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
-            break;
-          case Math.ceil(tvShow.vote_average) === 9 ||
-            Math.ceil(tvShow.vote_average) === 10:
-            tvShow.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
-            break;
-          default:
-            break;
-        }
-      });
-    },
     getRatingMovies() {
       state.movies.forEach((movie) => {
         switch (true) {
           case Math.ceil(movie.vote_average) === 1 ||
             Math.ceil(movie.vote_average) === 2:
-            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            movie.rating = 1;
+            movie.ratingEmptyStar = 4;
             break;
           case Math.ceil(movie.vote_average) === 3 ||
             Math.ceil(movie.vote_average) === 4:
-            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            movie.rating = 2;
+            movie.ratingEmptyStar = 3;
             break;
           case Math.ceil(movie.vote_average) === 5 ||
             Math.ceil(movie.vote_average) === 6:
-            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            movie.rating = 3;
+            movie.ratingEmptyStar = 2;
             break;
           case Math.ceil(movie.vote_average) === 7 ||
             Math.ceil(movie.vote_average) === 8:
-            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            movie.rating = 4;
+            movie.ratingEmptyStar = 1;
             break;
           case Math.ceil(movie.vote_average) === 9 ||
             Math.ceil(movie.vote_average) === 10:
-            movie.rating = '<font-awesome-icon icon="fa-regular fa-star" />';
+            movie.rating = 5;
+            movie.ratingEmptyStar = 0;
             break;
           default:
             break;
         }
       });
     },
-
+    getRatingTvShows() {
+      state.tvShows.forEach((tvShow) => {
+        switch (true) {
+          case Math.ceil(tvShow.vote_average) === 1 ||
+            Math.ceil(tvShow.vote_average) === 2:
+            tvShow.rating = 1;
+            tvShow.ratingEmptyStar = 4;
+            break;
+          case Math.ceil(tvShow.vote_average) === 3 ||
+            Math.ceil(tvShow.vote_average) === 4:
+            tvShow.rating = 2;
+            tvShow.ratingEmptyStar = 3;
+            break;
+          case Math.ceil(tvShow.vote_average) === 5 ||
+            Math.ceil(tvShow.vote_average) === 6:
+            tvShow.rating = 3;
+            tvShow.ratingEmptyStar = 2;
+            break;
+          case Math.ceil(tvShow.vote_average) === 7 ||
+            Math.ceil(tvShow.vote_average) === 8:
+            tvShow.rating = 4;
+            tvShow.ratingEmptyStar = 1;
+            break;
+          case Math.ceil(tvShow.vote_average) === 9 ||
+            Math.ceil(tvShow.vote_average) === 10:
+            tvShow.rating = 5;
+            tvShow.ratingEmptyStar = 0;
+            break;
+          default:
+            break;
+        }
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -241,6 +250,6 @@ header {
   text-align: center;
   padding: 1rem 0;
   background-color: $darkestColor;
-  border-bottom: 10px regular $liteDarkColor;
+  border-bottom: 10px solid $liteDarkColor;
 }
 </style>

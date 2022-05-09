@@ -11,7 +11,19 @@
         </span>
         <span v-else>{{ movie.original_language }}</span>
       </li>
-      <li><strong>Voto:</strong> <span v-html="movie.rating"></span></li>
+      <li>
+        <strong>Voto: </strong>
+        <font-awesome-icon
+          icon="fa-solid fa-star"
+          v-for="(starSolid, index) in movie.rating"
+          :key="index"
+        />
+        <font-awesome-icon
+          icon="fa-regular fa-star"
+          v-for="(starRegular, index) in -movie.ratingEmptyStar"
+          :key="index"
+        />
+      </li>
     </ul>
     <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
       <li><img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" /></li>
@@ -24,7 +36,19 @@
         </span>
         <span v-else>{{ tvShow.original_language }}</span>
       </li>
-      <li><strong>Voto:</strong> <span v-html="tvShow.rating"></span></li>
+      <li>
+        <strong>Voto: </strong>
+        <font-awesome-icon
+          icon="fa-solid fa-star"
+          v-for="(starSolid, index) in tvShow.rating"
+          :key="index"
+        />
+        <font-awesome-icon
+          icon="fa-regular fa-star"
+          v-for="(starRegular, index) in tvShow.ratingEmptyStar"
+          :key="index"
+        />
+      </li>
     </ul>
   </main>
 </template>
