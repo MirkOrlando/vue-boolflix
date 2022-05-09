@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-/* flag-icon */
+/* flag-icon -- https://openbase.com/js/vue-flag-icon -- */
 import FlagIcon from 'vue-flag-icon'
 Vue.use(FlagIcon);
 

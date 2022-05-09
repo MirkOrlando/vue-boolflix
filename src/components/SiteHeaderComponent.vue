@@ -43,6 +43,30 @@ export default {
             movie.thereIsFlag = true;
             movie.flag_svg = "it";
             break;
+          case movie.original_language.toLowerCase() === "fr":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "fr";
+            break;
+          case movie.original_language.toLowerCase() === "de":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "de";
+            break;
+          case movie.original_language.toLowerCase() === "en":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "gb";
+            break;
+          case movie.original_language.toLowerCase() === "es":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "es";
+            break;
+          case movie.original_language.toLowerCase() === "ru":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "ru";
+            break;
+          case movie.original_language.toLowerCase() === "cn":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "cn";
+            break;
 
           default:
             break;
