@@ -1,6 +1,6 @@
 <template>
   <main>
-    <ul style="padding: 1rem" v-for="movie in showMovies" :key="movie.id">
+    <ul style="padding: 1rem" v-for="movie in showCards" :key="movie.id">
       <li><strong>Titolo:</strong> {{ movie.title }}</li>
       <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
       <li>
@@ -24,15 +24,15 @@ export default {
     return {
       loading: null,
       error: null,
-      movies: null,
+      cards: null,
     };
   },
   computed: {
-    showMovies() {
-      if (!state.loading) {
-        return state.movies;
+    showCards() {
+      if (!state.loadingMovies && !state.loadingTvShows) {
+        return state.cards;
       } else {
-        return this.movies;
+        return this.cards;
       }
     },
   },

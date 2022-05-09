@@ -20,20 +20,32 @@ export default {
   name: "SiteHeaderComponent",
   data() {
     return {
-      link: "https://api.themoviedb.org/3/search/movie?api_key=d755a2b665e5b254648b51fb19699f56",
+      linkAPIMovies:
+        "https://api.themoviedb.org/3/search/movie?api_key=d755a2b665e5b254648b51fb19699f56",
+      linkAPITvShows:
+        "https://api.themoviedb.org/3/search/tv?api_key=d755a2b665e5b254648b51fb19699f56",
       query: "",
-      loading: null,
-      error: null,
+      loadingMovies: true,
+      loadingTvShows: true,
+      errorMovies: null,
+      errorTvShows: null,
       movies: null,
+      tvShows: null,
     };
   },
   methods: {
-    getFullLinkAPI() {
+    getFullLinkAPIMovies() {
       // &language=en-US&page=1&include_adult=false&query=i am
       let fullLink;
-      fullLink = this.link + "&query=" + this.query;
+      fullLink = this.linkAPIMovies + "&query=" + this.query;
       //console.log(fullLink);
-      this.query = "";
+      return fullLink;
+    },
+    getFullLinkAPITvShows() {
+      // &language=en-US&page=1&include_adult=false&query=e alla fine arriva mamma
+      let fullLink;
+      fullLink = this.linkAPITvShows + "&query=" + this.query;
+      //console.log(fullLink);
       return fullLink;
     },
     getLanguageFlag() {
@@ -75,22 +87,46 @@ export default {
     },
     callAPI() {
       axios
-        .get(this.getFullLinkAPI())
+        .get(this.getFullLinkAPIMovies())
         .then((response) => {
           //console.log(response);
+          //console.log(response.data.results);
           this.movies = response.data.results;
-          this.loading = false;
-          state.movies = this.movies;
-          state.loading = this.loading;
+          this.loadingMovies = false;
+          state.loadingMovies = this.loadingMovies;
+          this.movies.forEach((movie) => {
+            console.log(movie);
+            state.cards.push(movie);
+          });
+
           //console.log(state.movies);
           //console.log(state.loading);
           this.getLanguageFlag();
         })
         .catch((error) => {
           //console.log(error);
-          this.error = `OPS ${error}`;
-          state.error = this.error;
+          this.errorMovies = `OPS ${error}`;
+          state.errorMovies = this.errorMovies;
         });
+      axios
+        .get(this.getFullLinkAPITvShows())
+        .then((response) => {
+          //console.log(response);
+          //console.log(response.data.results);
+          this.tvShows = response.data.results;
+          this.loadingTvShows = false;
+          state.loadingTvShows = this.loadingTvShows;
+          this.tvShows.forEach((tvShow) => {
+            console.log(tvShow);
+            state.cards.push(tvShow);
+          });
+        })
+        .catch((error) => {
+          //console.log(error);
+          this.errorTvShows = `OPS ${error}`;
+          state.errorTvShows = this.errorTvShows;
+        });
+      this.query = "";
     },
   },
 };
