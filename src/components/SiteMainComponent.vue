@@ -1,6 +1,7 @@
 <template>
   <main>
     <ul style="padding: 1rem" v-for="movie in showMovies" :key="movie.id">
+      <li><img :src="movie.fullLinkPoster" :alt="movie.original_title" /></li>
       <li><strong>Titolo:</strong> {{ movie.title }}</li>
       <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
       <li>
@@ -13,6 +14,7 @@
       <li><strong>Voto:</strong> {{ movie.vote_average }}</li>
     </ul>
     <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
+      <li><img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" /></li>
       <li><strong>Titolo:</strong> {{ tvShow.name }}</li>
       <li><strong>Titolo originale:</strong> {{ tvShow.original_name }}</li>
       <li>

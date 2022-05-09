@@ -24,6 +24,7 @@ export default {
         "https://api.themoviedb.org/3/search/movie?api_key=d755a2b665e5b254648b51fb19699f56",
       linkAPITvShows:
         "https://api.themoviedb.org/3/search/tv?api_key=d755a2b665e5b254648b51fb19699f56",
+      linkImgPoster: "https://image.tmdb.org/t/p/w185/",
       query: "",
       loadingMovies: true,
       loadingTvShows: true,
@@ -122,7 +123,16 @@ export default {
         }
       });
     },
-
+    getLinkImgMovies() {
+      state.movies.forEach((movie) => {
+        movie.fullLinkPoster = this.linkImgPoster + movie.poster_path;
+      });
+    },
+    getLinkImgTvShows() {
+      state.tvShows.forEach((tvShow) => {
+        tvShow.fullLinkPoster = this.linkImgPoster + tvShow.poster_path;
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -137,6 +147,7 @@ export default {
           //console.log(state.movies);
           //console.log(state.loading);
           this.getLanguageFlagMovie();
+          this.getLinkImgMovies();
         })
         .catch((error) => {
           //console.log(error);
@@ -153,6 +164,7 @@ export default {
           state.loadingTvShows = this.loadingTvShows;
           state.tvShows = this.tvShows;
           this.getLanguageFlagTvShow();
+          this.getLinkImgTvShows();
         })
         .catch((error) => {
           //console.log(error);
