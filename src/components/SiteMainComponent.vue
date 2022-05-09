@@ -1,6 +1,6 @@
 <template>
   <main>
-    <ul style="padding: 1rem" v-for="movie in showCards" :key="movie.id">
+    <ul style="padding: 1rem" v-for="movie in showMovies" :key="movie.id">
       <li><strong>Titolo:</strong> {{ movie.title }}</li>
       <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
       <li>
@@ -11,6 +11,18 @@
         <span v-else>{{ movie.original_language }}</span>
       </li>
       <li><strong>Voto:</strong> {{ movie.vote_average }}</li>
+    </ul>
+    <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
+      <li><strong>Titolo:</strong> {{ tvShow.name }}</li>
+      <li><strong>Titolo originale:</strong> {{ tvShow.original_name }}</li>
+      <li>
+        <strong>Lingua: </strong>
+        <span v-if="tvShow.thereIsFlag">
+          <flag :iso="tvShow.flag_svg" />
+        </span>
+        <span v-else>{{ tvShow.original_language }}</span>
+      </li>
+      <li><strong>Voto:</strong> {{ tvShow.vote_average }}</li>
     </ul>
   </main>
 </template>
@@ -24,15 +36,22 @@ export default {
     return {
       loading: null,
       error: null,
-      cards: null,
+      movies: null,
     };
   },
   computed: {
-    showCards() {
-      if (!state.loadingMovies && !state.loadingTvShows) {
-        return state.cards;
+    showMovies() {
+      if (!state.loadingMovies) {
+        return state.movies;
       } else {
-        return this.cards;
+        return this.movies;
+      }
+    },
+    showTvShows() {
+      if (!state.loadingTvShows) {
+        return state.tvShows;
+      } else {
+        return this.tvShows;
       }
     },
   },

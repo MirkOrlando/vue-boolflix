@@ -48,7 +48,7 @@ export default {
       //console.log(fullLink);
       return fullLink;
     },
-    getLanguageFlag() {
+    getLanguageFlagMovie() {
       state.movies.forEach((movie) => {
         switch (true) {
           case movie.original_language.toLowerCase() === "it":
@@ -85,6 +85,44 @@ export default {
         }
       });
     },
+    getLanguageFlagTvShow() {
+      state.tvShows.forEach((tvShow) => {
+        switch (true) {
+          case tvShow.original_language.toLowerCase() === "it":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "it";
+            break;
+          case tvShow.original_language.toLowerCase() === "fr":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "fr";
+            break;
+          case tvShow.original_language.toLowerCase() === "de":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "de";
+            break;
+          case tvShow.original_language.toLowerCase() === "en":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "gb";
+            break;
+          case tvShow.original_language.toLowerCase() === "es":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "es";
+            break;
+          case tvShow.original_language.toLowerCase() === "ru":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "ru";
+            break;
+          case tvShow.original_language.toLowerCase() === "cn":
+            tvShow.thereIsFlag = true;
+            tvShow.flag_svg = "cn";
+            break;
+
+          default:
+            break;
+        }
+      });
+    },
+
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -94,14 +132,11 @@ export default {
           this.movies = response.data.results;
           this.loadingMovies = false;
           state.loadingMovies = this.loadingMovies;
-          this.movies.forEach((movie) => {
-            console.log(movie);
-            state.cards.push(movie);
-          });
+          state.movies = this.movies;
 
           //console.log(state.movies);
           //console.log(state.loading);
-          this.getLanguageFlag();
+          this.getLanguageFlagMovie();
         })
         .catch((error) => {
           //console.log(error);
@@ -116,10 +151,8 @@ export default {
           this.tvShows = response.data.results;
           this.loadingTvShows = false;
           state.loadingTvShows = this.loadingTvShows;
-          this.tvShows.forEach((tvShow) => {
-            console.log(tvShow);
-            state.cards.push(tvShow);
-          });
+          state.tvShows = this.tvShows;
+          this.getLanguageFlagTvShow();
         })
         .catch((error) => {
           //console.log(error);
