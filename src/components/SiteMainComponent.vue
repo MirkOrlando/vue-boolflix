@@ -1,6 +1,6 @@
 <template>
   <main>
-    <ul style="padding: 1rem" v-for="movie in movies" :key="movie.id">
+    <ul style="padding: 1rem" v-for="movie in showMovies" :key="movie.id">
       <li><strong>Titolo:</strong> {{ movie.title }}</li>
       <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
       <li><strong>Lingua:</strong> {{ movie.original_language }}</li>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-/* import state from "@/state.js"; */
+import state from "@/state.js";
 
 export default {
   name: "SiteMainComponent",
@@ -21,14 +21,14 @@ export default {
       movies: null,
     };
   },
-  /*   computed: {
+  computed: {
     showMovies() {
-      if (state.query) {
-        return (this.movies = state.movies);
+      if (!state.loading) {
+        return state.movies;
       } else {
         return this.movies;
       }
     },
-  }, */
+  },
 };
 </script>
