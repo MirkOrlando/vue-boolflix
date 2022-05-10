@@ -143,50 +143,6 @@ export default {
         }
       });
     },
-    getRatingMovies() {
-      state.movies.forEach((movie) => {
-        movie.rating = [];
-        movie.ratingEmptyStar = [];
-        let starsFull = Math.ceil((movie.vote_average - 0.5) / 2);
-        if (isNaN(parseInt(starsFull)) || starsFull <= 0) {
-          starsFull = 0;
-        }
-        for (let i = 0; i < starsFull; i++) {
-          movie.rating.push({ sKey: i + "f" });
-        }
-        if (starsFull !== 0) {
-          for (let i = 0; i < 5 - starsFull; i++) {
-            movie.ratingEmptyStar.push({ sKey: i + "e" });
-          }
-        } else {
-          for (let i = 0; i < 5; i++) {
-            movie.ratingEmptyStar.push({ sKey: i + "e" });
-          }
-        }
-      });
-    },
-    getRatingTvShows() {
-      state.tvShows.forEach((tvShow) => {
-        tvShow.rating = [];
-        tvShow.ratingEmptyStar = [];
-        let starsFull = Math.ceil((tvShow.vote_average - 0.5) / 2);
-        if (isNaN(parseInt(starsFull)) || starsFull <= 0) {
-          starsFull = 0;
-        }
-        for (let i = 0; i < starsFull; i++) {
-          tvShow.rating.push({ sKey: i + "f" });
-        }
-        if (starsFull !== 0) {
-          for (let i = 0; i < 5 - starsFull; i++) {
-            tvShow.ratingEmptyStar.push({ sKey: i + "e" });
-          }
-        } else {
-          for (let i = 0; i < 5; i++) {
-            tvShow.ratingEmptyStar.push({ sKey: i + "e" });
-          }
-        }
-      });
-    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -202,7 +158,6 @@ export default {
           //console.log(state.loading);
           this.getLanguageFlagMovie();
           this.getLinkImgMovies();
-          this.getRatingMovies();
         })
         .catch((error) => {
           //console.log(error);
@@ -220,7 +175,6 @@ export default {
           state.tvShows = this.tvShows;
           this.getLanguageFlagTvShow();
           this.getLinkImgTvShows();
-          this.getRatingTvShows();
         })
         .catch((error) => {
           //console.log(error);

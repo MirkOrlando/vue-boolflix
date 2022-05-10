@@ -24,18 +24,20 @@
                   <strong>Voto: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
-                    v-for="star in getRating(movie.vote_average)"
-                    :key="star"
+                    v-for="(star, index) in getRating(movie.vote_average)"
+                    :key="index"
                   />
 
                   <font-awesome-icon
                     icon="fa-regular fa-star"
-                    v-for="star in 5 - getRating(movie.vote_average)"
-                    :key="star"
+                    v-for="(star, index) in 5 - getRating(movie.vote_average)"
+                    :key="index"
                   />
                 </div>
                 <div class="overview">
-                  <strong>Overview:</strong> {{ movie.overview }}
+                  <div class="scroll_averview">
+                    <strong>Overview:</strong> {{ movie.overview }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -63,17 +65,19 @@
                   <strong>Voto: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
-                    v-for="star in getRating(tvShow.vote_average)"
-                    :key="star"
+                    v-for="(star, index) in getRating(tvShow.vote_average)"
+                    :key="index"
                   />
                   <font-awesome-icon
                     icon="fa-regular fa-star"
-                    v-for="star in 5 - getRating(tvShow.vote_average)"
-                    :key="star"
+                    v-for="(star, index) in 5 - getRating(tvShow.vote_average)"
+                    :key="index"
                   />
                 </div>
                 <div class="overview">
-                  <strong>Overview:</strong> {{ tvShow.overview }}
+                  <div class="scroll_averview">
+                    <strong>Overview:</strong> {{ tvShow.overview }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,13 +138,36 @@ export default {
     padding: 1rem;
     background-color: $darkestColor;
     height: 100%;
-    max-height: 100%;
     opacity: 0;
     transition: all 500ms linear;
     cursor: context-menu;
+    .overview {
+      max-height: 70%;
+      overflow: hidden;
+      transition: all 10s linear;
+      .scroll_averview {
+        height: 100%;
+        transition: all 10s linear;
+      }
+    }
+    &:hover .scroll_averview {
+      animation: autoScroll 20s linear;
+    }
   }
   &:hover .details {
     opacity: 1;
+  }
+}
+
+/* animations */
+@keyframes autoScroll {
+  0% {
+  }
+  80% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
