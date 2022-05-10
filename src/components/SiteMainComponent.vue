@@ -4,24 +4,24 @@
       <div class="row">
         <div class="col-5" v-for="movie in showMovies" :key="movie.id">
           <div class="card">
-            <div class="poster">
+            <div class="poster" @mouseenter="hasToScroll">
               <img :src="movie.fullLinkPoster" :alt="movie.original_title" />
               <div class="details">
                 <div class="title">
-                  <strong>Titolo:</strong> {{ movie.title }}
+                  <strong>Title:</strong> {{ movie.title }}
                 </div>
                 <div class="original_title">
-                  <strong>Titolo originale:</strong> {{ movie.original_title }}
+                  <strong>Original Title:</strong> {{ movie.original_title }}
                 </div>
                 <div class="language">
-                  <strong>Lingua: </strong>
+                  <strong>Original Language: </strong>
                   <span v-if="movie.thereIsFlag">
                     <flag :iso="movie.flag_svg" />
                   </span>
                   <span v-else>{{ movie.original_language }}</span>
                 </div>
                 <div class="vote">
-                  <strong>Voto: </strong>
+                  <strong>Rating: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
                     v-for="(star, index) in getRating(movie.vote_average)"
@@ -34,8 +34,8 @@
                     :key="index"
                   />
                 </div>
-                <div class="overview">
-                  <div class="scroll_averview">
+                <div class="overview" ref="overview_wrapper">
+                  <div class="scroll_overview" ref="overview_text">
                     <strong>Overview:</strong> {{ movie.overview }}
                   </div>
                 </div>
@@ -49,20 +49,20 @@
               <img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" />
               <div class="details">
                 <div class="title">
-                  <strong>Titolo:</strong> {{ tvShow.name }}
+                  <strong>Title:</strong> {{ tvShow.name }}
                 </div>
                 <div class="original_title">
-                  <strong>Titolo originale:</strong> {{ tvShow.original_name }}
+                  <strong>Original Title:</strong> {{ tvShow.original_name }}
                 </div>
                 <div class="language">
-                  <strong>Lingua: </strong>
+                  <strong>Original Language: </strong>
                   <span v-if="tvShow.thereIsFlag">
                     <flag :iso="tvShow.flag_svg" />
                   </span>
                   <span v-else>{{ tvShow.original_language }}</span>
                 </div>
                 <div class="vote">
-                  <strong>Voto: </strong>
+                  <strong>Rating: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
                     v-for="(star, index) in getRating(tvShow.vote_average)"
@@ -74,8 +74,8 @@
                     :key="index"
                   />
                 </div>
-                <div class="overview">
-                  <div class="scroll_averview">
+                <div class="overview" ref="overview_wrapper">
+                  <div class="scroll_overview" ref="overview_text">
                     <strong>Overview:</strong> {{ tvShow.overview }}
                   </div>
                 </div>
@@ -99,6 +99,23 @@ export default {
       error: null,
       movies: null,
     };
+  },
+  methods: {
+    hasToScroll() {
+      //console.log(this.$refs.overview_text, this.$refs.overview_wrapper);
+      const textToScrollAll = this.$refs.overview_text;
+      const wrapperAll = this.$refs.overview_wrapper;
+      for (let i = 0; i < textToScrollAll.length; i++) {
+        const textToScroll = textToScrollAll[i];
+        const wrapper = wrapperAll[i];
+        //console.log(textToScroll, wrapper);
+        //console.log(textToScroll.clientHeight, wrapper.clientHeight);
+        if (textToScroll.clientHeight > wrapper.clientHeight) {
+          textToScroll.classList.add("scroll");
+          console.log(textToScroll, "add");
+        }
+      }
+    },
   },
   computed: {
     showMovies() {
@@ -125,12 +142,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card {
+  height: 100%;
+}
 .poster {
   position: relative;
+  height: 100%;
   img {
     max-width: 100%;
-    max-height: 513px;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
   }
   .details {
     position: absolute;
@@ -141,21 +162,27 @@ export default {
     opacity: 0;
     transition: all 500ms linear;
     cursor: context-menu;
+    .title,
+    .original_title,
+    .language,
+    .vote,
     .overview {
-      max-height: 70%;
+      padding: 0.25rem 0;
+    }
+    .overview {
+      max-height: 60%;
       overflow: hidden;
       transition: all 10s linear;
-      .scroll_averview {
+      .scroll_overview {
         height: 100%;
-        transition: all 10s linear;
       }
     }
-    &:hover .scroll_averview {
-      animation: autoScroll 20s linear;
+    &:hover .scroll {
+      animation: autoScroll 20s 2s linear;
     }
   }
   &:hover .details {
-    opacity: 1;
+    opacity: 0.9;
   }
 }
 
@@ -164,7 +191,7 @@ export default {
   0% {
   }
   80% {
-    transform: translateY(-100%);
+    transform: translateY(-50%);
   }
   100% {
     transform: translateY(0);
