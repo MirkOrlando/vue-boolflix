@@ -24,7 +24,7 @@ export default {
         "https://api.themoviedb.org/3/search/movie?api_key=d755a2b665e5b254648b51fb19699f56",
       linkAPITvShows:
         "https://api.themoviedb.org/3/search/tv?api_key=d755a2b665e5b254648b51fb19699f56",
-      linkImgPoster: "https://image.tmdb.org/t/p/w185/",
+      linkImgPoster: "https://image.tmdb.org/t/p/w342/",
       query: "",
       loadingMovies: true,
       loadingTvShows: true,
@@ -145,7 +145,33 @@ export default {
     },
     getRatingMovies() {
       state.movies.forEach((movie) => {
-        switch (true) {
+        movie.rating = [];
+        movie.ratingEmptyStar = [];
+        for (
+          let i = 0;
+          i < Math.ceil(Math.floor(movie.vote_average) / 2);
+          i++
+        ) {
+          movie.rating.push({ sKey: i + "f" });
+        }
+        if (movie.rating.length !== 0) {
+          for (
+            let i = 0;
+            i < 5 - Math.ceil(Math.floor(movie.vote_average) / 2);
+            i++
+          ) {
+            movie.ratingEmptyStar.push({ sKey: i + "e" });
+          }
+        } else {
+          for (let i = 0; i < 5; i++) {
+            movie.ratingEmptyStar.push({ sKey: i + "e" });
+          }
+        }
+        /*         switch (true) {
+          case Math.ceil(movie.vote_average) === 0:
+            movie.rating = 0;
+            movie.ratingEmptyStar = 5;
+            break;
           case Math.ceil(movie.vote_average) === 1 ||
             Math.ceil(movie.vote_average) === 2:
             movie.rating = 1;
@@ -173,12 +199,38 @@ export default {
             break;
           default:
             break;
-        }
+        } */
       });
     },
     getRatingTvShows() {
       state.tvShows.forEach((tvShow) => {
-        switch (true) {
+        tvShow.rating = [];
+        tvShow.ratingEmptyStar = [];
+        for (
+          let i = 0;
+          i < Math.ceil(Math.floor(tvShow.vote_average) / 2);
+          i++
+        ) {
+          tvShow.rating.push({ sKey: i + "f" });
+        }
+        if (tvShow.rating.length !== 0) {
+          for (
+            let i = 0;
+            i < 5 - Math.ceil(Math.floor(tvShow.vote_average) / 2);
+            i++
+          ) {
+            tvShow.ratingEmptyStar.push({ sKey: i + "e" });
+          }
+        } else {
+          for (let i = 0; i < 5; i++) {
+            tvShow.ratingEmptyStar.push({ sKey: i + "e" });
+          }
+        }
+        /*         switch (true) {
+          case Math.ceil(tvShow.vote_average) === 0:
+            tvShow.rating = 0;
+            tvShow.ratingEmptyStar = 5;
+            break;
           case Math.ceil(tvShow.vote_average) === 1 ||
             Math.ceil(tvShow.vote_average) === 2:
             tvShow.rating = 1;
@@ -207,6 +259,7 @@ export default {
           default:
             break;
         }
+ */
       });
     },
     callAPI() {

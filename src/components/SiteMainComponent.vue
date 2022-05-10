@@ -15,18 +15,20 @@
       </li>
       <li>
         <strong>Voto: </strong>
-        <!--         <font-awesome-icon
+        <font-awesome-icon
           icon="fa-solid fa-star"
-          v-for="(starSolid, index) in movie.rating"
-          :key="index"
+          v-for="star in movie.rating"
+          :key="star.sKey"
+          v-show="movie.rating.length !== 0"
         />
         <font-awesome-icon
           icon="fa-regular fa-star"
-          v-for="(starRegular, index) in -movie.ratingEmptyStar"
-          :key="index"
+          v-for="star in -movie.ratingEmptyStar"
+          :key="star.sKey"
+          v-show="movie.ratingEmptyStar.length !== 0"
         />
- -->
       </li>
+      <!-- voto movies -->
     </ul>
     <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
       <li><img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" /></li>
@@ -41,18 +43,20 @@
       </li>
       <li>
         <strong>Voto: </strong>
-        <!--         <font-awesome-icon
+        <font-awesome-icon
           icon="fa-solid fa-star"
-          v-for="(starSolid, index) in tvShow.rating"
-          :key="index"
+          v-for="star in tvShow.rating"
+          :key="star.sKey"
+          v-show="tvShow.rating.length !== 0"
         />
         <font-awesome-icon
           icon="fa-regular fa-star"
-          v-for="(starRegular, index) in tvShow.ratingEmptyStar"
-          :key="index"
+          v-for="star in tvShow.ratingEmptyStar"
+          :key="star.sKey"
+          v-show="tvShow.ratingEmptyStar.length !== 0"
         />
- -->
       </li>
+      <!-- voto tvshow -->
     </ul>
   </main>
 </template>
@@ -90,8 +94,8 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  max-width: 185px;
-  height: 278px;
+  max-width: 342px;
+  height: 513px;
   object-fit: contain;
 }
 </style>
