@@ -15,16 +15,15 @@
       </li>
       <li>
         <strong>Voto: </strong>
-
         <font-awesome-icon
           icon="fa-solid fa-star"
-          v-for="star in movie.rating"
+          v-for="star in getRating(movie.vote_average)"
           :key="star.sKey"
         />
 
         <font-awesome-icon
           icon="fa-regular fa-star"
-          v-for="star in -movie.ratingEmptyStar"
+          v-for="star in 5 - getRating(movie.vote_average)"
           :key="star.sKey"
         />
       </li>
@@ -45,12 +44,12 @@
         <strong>Voto: </strong>
         <font-awesome-icon
           icon="fa-solid fa-star"
-          v-for="star in tvShow.rating"
+          v-for="star in getRating(tvShow.vote_average)"
           :key="star.sKey"
         />
         <font-awesome-icon
           icon="fa-regular fa-star"
-          v-for="star in tvShow.ratingEmptyStar"
+          v-for="star in 5 - getRating(tvShow.vote_average)"
           :key="star.sKey"
         />
       </li>
@@ -85,6 +84,11 @@ export default {
       } else {
         return this.tvShows;
       }
+    },
+    getRating() {
+      return (number) => {
+        return Math.ceil(number / 2);
+      };
     },
   },
 };
