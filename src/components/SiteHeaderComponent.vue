@@ -125,12 +125,22 @@ export default {
     },
     getLinkImgMovies() {
       state.movies.forEach((movie) => {
-        movie.fullLinkPoster = this.linkImgPoster + movie.poster_path;
+        if (movie.poster_path) {
+          movie.fullLinkPoster = this.linkImgPoster + movie.poster_path;
+        } else {
+          movie.fullLinkPoster =
+            "https://icons.iconarchive.com/icons/martz90/circle/512/video-camera-icon.png";
+        }
       });
     },
     getLinkImgTvShows() {
       state.tvShows.forEach((tvShow) => {
-        tvShow.fullLinkPoster = this.linkImgPoster + tvShow.poster_path;
+        if (tvShow.poster_path) {
+          tvShow.fullLinkPoster = this.linkImgPoster + tvShow.poster_path;
+        } else {
+          tvShow.fullLinkPoster =
+            "https://icons.iconarchive.com/icons/martz90/circle/512/video-camera-icon.png";
+        }
       });
     },
     getRatingMovies() {

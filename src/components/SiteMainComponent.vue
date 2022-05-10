@@ -1,7 +1,9 @@
 <template>
   <main>
     <ul style="padding: 1rem" v-for="movie in showMovies" :key="movie.id">
-      <li><img :src="movie.fullLinkPoster" :alt="movie.original_title" /></li>
+      <li>
+        <img :src="movie.fullLinkPoster" :alt="movie.original_title" />
+      </li>
       <li><strong>Titolo:</strong> {{ movie.title }}</li>
       <li><strong>Titolo originale:</strong> {{ movie.original_title }}</li>
       <li>
@@ -13,7 +15,7 @@
       </li>
       <li>
         <strong>Voto: </strong>
-        <font-awesome-icon
+        <!--         <font-awesome-icon
           icon="fa-solid fa-star"
           v-for="(starSolid, index) in movie.rating"
           :key="index"
@@ -23,6 +25,7 @@
           v-for="(starRegular, index) in -movie.ratingEmptyStar"
           :key="index"
         />
+ -->
       </li>
     </ul>
     <ul style="padding: 1rem" v-for="tvShow in showTvShows" :key="tvShow.id">
@@ -38,7 +41,7 @@
       </li>
       <li>
         <strong>Voto: </strong>
-        <font-awesome-icon
+        <!--         <font-awesome-icon
           icon="fa-solid fa-star"
           v-for="(starSolid, index) in tvShow.rating"
           :key="index"
@@ -48,6 +51,7 @@
           v-for="(starRegular, index) in tvShow.ratingEmptyStar"
           :key="index"
         />
+ -->
       </li>
     </ul>
   </main>
@@ -83,3 +87,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+img {
+  max-width: 185px;
+  height: 278px;
+  object-fit: contain;
+}
+</style>
