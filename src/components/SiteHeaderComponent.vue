@@ -147,19 +147,15 @@ export default {
       state.movies.forEach((movie) => {
         movie.rating = [];
         movie.ratingEmptyStar = [];
-        for (
-          let i = 0;
-          i < Math.ceil(Math.floor(movie.vote_average) / 2);
-          i++
-        ) {
+        let starsFull = Math.ceil((movie.vote_average - 0.5) / 2);
+        if (isNaN(parseInt(starsFull)) || starsFull <= 0) {
+          starsFull = 0;
+        }
+        for (let i = 0; i < starsFull; i++) {
           movie.rating.push({ sKey: i + "f" });
         }
-        if (movie.rating.length !== 0) {
-          for (
-            let i = 0;
-            i < 5 - Math.ceil(Math.floor(movie.vote_average) / 2);
-            i++
-          ) {
+        if (starsFull !== 0) {
+          for (let i = 0; i < 5 - starsFull; i++) {
             movie.ratingEmptyStar.push({ sKey: i + "e" });
           }
         } else {
@@ -167,58 +163,21 @@ export default {
             movie.ratingEmptyStar.push({ sKey: i + "e" });
           }
         }
-        /*         switch (true) {
-          case Math.ceil(movie.vote_average) === 0:
-            movie.rating = 0;
-            movie.ratingEmptyStar = 5;
-            break;
-          case Math.ceil(movie.vote_average) === 1 ||
-            Math.ceil(movie.vote_average) === 2:
-            movie.rating = 1;
-            movie.ratingEmptyStar = 4;
-            break;
-          case Math.ceil(movie.vote_average) === 3 ||
-            Math.ceil(movie.vote_average) === 4:
-            movie.rating = 2;
-            movie.ratingEmptyStar = 3;
-            break;
-          case Math.ceil(movie.vote_average) === 5 ||
-            Math.ceil(movie.vote_average) === 6:
-            movie.rating = 3;
-            movie.ratingEmptyStar = 2;
-            break;
-          case Math.ceil(movie.vote_average) === 7 ||
-            Math.ceil(movie.vote_average) === 8:
-            movie.rating = 4;
-            movie.ratingEmptyStar = 1;
-            break;
-          case Math.ceil(movie.vote_average) === 9 ||
-            Math.ceil(movie.vote_average) === 10:
-            movie.rating = 5;
-            movie.ratingEmptyStar = 0;
-            break;
-          default:
-            break;
-        } */
       });
     },
     getRatingTvShows() {
       state.tvShows.forEach((tvShow) => {
         tvShow.rating = [];
         tvShow.ratingEmptyStar = [];
-        for (
-          let i = 0;
-          i < Math.ceil(Math.floor(tvShow.vote_average) / 2);
-          i++
-        ) {
+        let starsFull = Math.ceil((tvShow.vote_average - 0.5) / 2);
+        if (isNaN(parseInt(starsFull)) || starsFull <= 0) {
+          starsFull = 0;
+        }
+        for (let i = 0; i < starsFull; i++) {
           tvShow.rating.push({ sKey: i + "f" });
         }
-        if (tvShow.rating.length !== 0) {
-          for (
-            let i = 0;
-            i < 5 - Math.ceil(Math.floor(tvShow.vote_average) / 2);
-            i++
-          ) {
+        if (starsFull !== 0) {
+          for (let i = 0; i < 5 - starsFull; i++) {
             tvShow.ratingEmptyStar.push({ sKey: i + "e" });
           }
         } else {
@@ -226,40 +185,6 @@ export default {
             tvShow.ratingEmptyStar.push({ sKey: i + "e" });
           }
         }
-        /*         switch (true) {
-          case Math.ceil(tvShow.vote_average) === 0:
-            tvShow.rating = 0;
-            tvShow.ratingEmptyStar = 5;
-            break;
-          case Math.ceil(tvShow.vote_average) === 1 ||
-            Math.ceil(tvShow.vote_average) === 2:
-            tvShow.rating = 1;
-            tvShow.ratingEmptyStar = 4;
-            break;
-          case Math.ceil(tvShow.vote_average) === 3 ||
-            Math.ceil(tvShow.vote_average) === 4:
-            tvShow.rating = 2;
-            tvShow.ratingEmptyStar = 3;
-            break;
-          case Math.ceil(tvShow.vote_average) === 5 ||
-            Math.ceil(tvShow.vote_average) === 6:
-            tvShow.rating = 3;
-            tvShow.ratingEmptyStar = 2;
-            break;
-          case Math.ceil(tvShow.vote_average) === 7 ||
-            Math.ceil(tvShow.vote_average) === 8:
-            tvShow.rating = 4;
-            tvShow.ratingEmptyStar = 1;
-            break;
-          case Math.ceil(tvShow.vote_average) === 9 ||
-            Math.ceil(tvShow.vote_average) === 10:
-            tvShow.rating = 5;
-            tvShow.ratingEmptyStar = 0;
-            break;
-          default:
-            break;
-        }
- */
       });
     },
     callAPI() {

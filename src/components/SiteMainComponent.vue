@@ -15,17 +15,17 @@
       </li>
       <li>
         <strong>Voto: </strong>
+
         <font-awesome-icon
           icon="fa-solid fa-star"
           v-for="star in movie.rating"
           :key="star.sKey"
-          v-show="movie.rating.length !== 0"
         />
+
         <font-awesome-icon
           icon="fa-regular fa-star"
           v-for="star in -movie.ratingEmptyStar"
           :key="star.sKey"
-          v-show="movie.ratingEmptyStar.length !== 0"
         />
       </li>
       <!-- voto movies -->
@@ -47,13 +47,11 @@
           icon="fa-solid fa-star"
           v-for="star in tvShow.rating"
           :key="star.sKey"
-          v-show="tvShow.rating.length !== 0"
         />
         <font-awesome-icon
           icon="fa-regular fa-star"
           v-for="star in tvShow.ratingEmptyStar"
           :key="star.sKey"
-          v-show="tvShow.ratingEmptyStar.length !== 0"
         />
       </li>
       <!-- voto tvshow -->
