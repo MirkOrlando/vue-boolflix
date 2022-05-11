@@ -164,7 +164,7 @@ export default {
             //console.log(response);
             //console.log(cast);
             movie.cast = cast;
-            console.log(movie.cast);
+            //console.log(movie.cast);
           })
           .catch((error) => {
             console.log(error);
@@ -196,6 +196,34 @@ export default {
           });
       });
     },
+    getGenreMovie() {
+      state.movies.forEach((movie) => {
+        //console.log(movie);
+        axios
+          .get(
+            "https://api.themoviedb.org/3/genre/movie/list?api_key=d755a2b665e5b254648b51fb19699f56"
+          )
+          .then((response) => {
+            //console.log(response);
+            const genres = response.data.genres;
+            const genresToPush = [];
+            if (movie.genre_ids.length > 0) {
+              movie.genre_ids.forEach((genre_id) => {
+                genres.forEach((genre) => {
+                  if (genre_id === genre.id) {
+                    genresToPush.push(genre);
+                  }
+                });
+              });
+            }
+            movie.genres = genresToPush;
+            console.log(movie);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -212,6 +240,7 @@ export default {
           this.getLanguageFlagMovie();
           this.getLinkImgMovies();
           this.getCastMovie();
+          this.getGenreMovie();
         })
         .catch((error) => {
           //console.log(error);

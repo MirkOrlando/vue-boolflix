@@ -124,7 +124,7 @@ export default {
         //console.log(textToScroll.clientHeight, wrapper.clientHeight);
         if (textToScroll.clientHeight > wrapper.clientHeight) {
           textToScroll.classList.add("scroll");
-          console.log(textToScroll, "add");
+          //console.log(textToScroll, "add");
         }
       }
     },
