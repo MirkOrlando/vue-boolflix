@@ -80,6 +80,12 @@
                     :key="index"
                   />
                 </div>
+                <div class="cast">
+                  <strong>Cast: </strong>
+                  <span v-for="actor in tvShow.cast" :key="actor.id">
+                    {{ actor.name }}
+                  </span>
+                </div>
                 <div class="overview" ref="overview_wrapper">
                   <div class="scroll_overview" ref="overview_text">
                     <strong>Overview:</strong> {{ tvShow.overview }}
@@ -165,6 +171,7 @@ export default {
     padding: 1rem;
     background-color: $darkestColor;
     height: 100%;
+    width: 100%;
     opacity: 0;
     transition: all 500ms linear;
     cursor: context-menu;
@@ -176,7 +183,7 @@ export default {
       padding: 0.25rem 0;
     }
     .overview {
-      max-height: 60%;
+      max-height: 40%;
       overflow: hidden;
       transition: all 10s linear;
       .scroll_overview {

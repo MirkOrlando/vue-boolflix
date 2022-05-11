@@ -171,6 +171,31 @@ export default {
           });
       });
     },
+    //https://api.themoviedb.org/3/tv/1100/credits?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US
+    getCastTvShow() {
+      state.tvShows.forEach((tvShow) => {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/tv/${tvShow.id}/credits?api_key=d755a2b665e5b254648b51fb19699f56`
+          )
+          .then((response) => {
+            //console.log(response);
+            const cast = [];
+            for (let i = 0; i < 5; i++) {
+              if (response.data.cast.length !== 0 && response.data.cast[i]) {
+                cast.push(response.data.cast[i]);
+              }
+            }
+            //console.log(response);
+            //console.log(cast);
+            tvShow.cast = cast;
+            //console.log(tvShow.cast);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -204,6 +229,7 @@ export default {
           state.tvShows = this.tvShows;
           this.getLanguageFlagTvShow();
           this.getLinkImgTvShows();
+          this.getCastTvShow();
         })
         .catch((error) => {
           //console.log(error);
