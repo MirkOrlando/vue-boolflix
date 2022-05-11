@@ -206,6 +206,7 @@ export default {
       .vote,
       .overview {
         padding: 0.25rem 0;
+        border-bottom: 4px solid $liteDarkColor;
       }
     }
   }

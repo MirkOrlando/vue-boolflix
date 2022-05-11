@@ -196,8 +196,8 @@ export default {
       }
     },
     getGenreMovie() {
-      state.movies.forEach((movie) => {
-        //console.log(movie);
+      for (let i = 0; i < state.movies.length; i++) {
+        const movie = state.movies[i];
         axios
           .get(
             "https://api.themoviedb.org/3/genre/movie/list?api_key=d755a2b665e5b254648b51fb19699f56"
@@ -215,18 +215,18 @@ export default {
                 });
               });
             }
-            movie.genres = genresToPush;
-            this.loadingGenreMovies = false;
+            this.$set(this.movies[i], "genres", genresToPush);
             //console.log(movie);
           })
           .catch((error) => {
             console.log(error);
           });
-      });
+      }
+      this.loadingGenreMovies = false;
     },
     getGenreTvShow() {
-      state.tvShows.forEach((tvShow) => {
-        //console.log(movie);
+      for (let i = 0; i < state.tvShows.length; i++) {
+        const tvShow = state.tvShows[i];
         axios
           .get(
             "https://api.themoviedb.org/3/genre/tv/list?api_key=d755a2b665e5b254648b51fb19699f56"
@@ -244,14 +244,14 @@ export default {
                 });
               });
             }
-            tvShow.genres = genresToPush;
-            this.loadingGenreTvShows = false;
+            this.$set(this.tvShows[i], "genres", genresToPush);
             //console.log(movie);
           })
           .catch((error) => {
             console.log(error);
           });
-      });
+        this.loadingGenreTvShows = false;
+      }
     },
     callAPI() {
       axios
