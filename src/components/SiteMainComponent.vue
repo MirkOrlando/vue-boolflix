@@ -6,48 +6,48 @@
           <div class="card">
             <div class="poster" @mouseenter="hasToScroll">
               <img :src="movie.fullLinkPoster" :alt="movie.original_title" />
-              <div class="details">
-                <div class="title">
-                  <strong>Title:</strong> {{ movie.title }}
-                </div>
-                <div class="original_title">
-                  <strong>Original Title:</strong> {{ movie.original_title }}
-                </div>
-                <div class="genre" v-if="movie.genres">
-                  <strong>Genre: </strong>
-                  <span v-for="genre in movie.genres" :key="genre.id">
-                    {{ genre.name }}
-                  </span>
-                </div>
-                <div class="language">
-                  <strong>Original Language: </strong>
-                  <span v-if="movie.thereIsFlag">
-                    <flag :iso="movie.flag_svg" />
-                  </span>
-                  <span v-else>{{ movie.original_language }}</span>
-                </div>
-                <div class="vote">
-                  <strong>Rating: </strong>
-                  <font-awesome-icon
-                    icon="fa-solid fa-star"
-                    v-for="star in getRating(movie.vote_average)"
-                    :key="star + 'full'"
-                  />
+              <div class="details" ref="details_wrapper">
+                <div class="scroll_details" ref="details_text">
+                  <div class="title">
+                    <strong>Title:</strong> {{ movie.title }}
+                  </div>
+                  <div class="original_title">
+                    <strong>Original Title:</strong> {{ movie.original_title }}
+                  </div>
+                  <div class="genre" v-if="movie.genres">
+                    <strong>Genre: </strong>
+                    <span v-for="genre in movie.genres" :key="genre.id">
+                      {{ genre.name }}
+                    </span>
+                  </div>
+                  <div class="language">
+                    <strong>Original Language: </strong>
+                    <span v-if="movie.thereIsFlag">
+                      <flag :iso="movie.flag_svg" />
+                    </span>
+                    <span v-else>{{ movie.original_language }}</span>
+                  </div>
+                  <div class="vote">
+                    <strong>Rating: </strong>
+                    <font-awesome-icon
+                      icon="fa-solid fa-star"
+                      v-for="star in getRating(movie.vote_average)"
+                      :key="star + 'full'"
+                    />
 
-                  <font-awesome-icon
-                    icon="fa-regular fa-star"
-                    v-for="star in 5 - getRating(movie.vote_average)"
-                    :key="star + 'full'"
-                  />
-                </div>
-                <div class="cast" v-if="movie.cast">
-                  <strong>Cast: </strong>
-                  <span v-for="actor in movie.cast" :key="actor.cast_id">
-                    {{ actor.name }}
-                  </span>
-                </div>
-                <div class="overview" ref="overview_wrapper">
-                  <div class="scroll_overview" ref="overview_text">
+                    <font-awesome-icon
+                      icon="fa-regular fa-star"
+                      v-for="star in 5 - getRating(movie.vote_average)"
+                      :key="star + 'full'"
+                    />
+                  </div>
+                  <div class="cast" v-if="movie.cast">
+                    <strong>Cast: </strong>
+                    <span v-for="actor in movie.cast" :key="actor.cast_id">
+                      {{ actor.name }}
+                    </span>
+                  </div>
+                  <div class="overview">
                     <strong>Overview:</strong> {{ movie.overview }}
                   </div>
                 </div>
@@ -57,49 +57,49 @@
         </div>
         <div class="col-5" v-for="tvShow in showTvShows" :key="tvShow.id">
           <div class="card">
-            <div class="poster">
+            <div class="poster" @mouseenter="hasToScroll">
               <img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" />
-              <div class="details">
-                <div class="title">
-                  <strong>Title:</strong> {{ tvShow.name }}
-                </div>
-                <div class="original_title">
-                  <strong>Original Title:</strong> {{ tvShow.original_name }}
-                </div>
-                <div class="genre" v-if="tvShow.genres">
-                  <strong>Genre: </strong>
-                  <span v-for="genre in tvShow.genres" :key="genre.id">
-                    {{ genre.name }}
-                  </span>
-                </div>
-                <div class="language">
-                  <strong>Original Language: </strong>
-                  <span v-if="tvShow.thereIsFlag">
-                    <flag :iso="tvShow.flag_svg" />
-                  </span>
-                  <span v-else>{{ tvShow.original_language }}</span>
-                </div>
-                <div class="vote">
-                  <strong>Rating: </strong>
-                  <font-awesome-icon
-                    icon="fa-solid fa-star"
-                    v-for="star in getRating(tvShow.vote_average)"
-                    :key="star + 'full'"
-                  />
-                  <font-awesome-icon
-                    icon="fa-regular fa-star"
-                    v-for="star in 5 - getRating(tvShow.vote_average)"
-                    :key="star + 'empty'"
-                  />
-                </div>
-                <div class="cast" v-if="tvShow.cast">
-                  <strong>Cast: </strong>
-                  <span v-for="actor in tvShow.cast" :key="actor.id">
-                    {{ actor.name }}
-                  </span>
-                </div>
-                <div class="overview" ref="overview_wrapper">
-                  <div class="scroll_overview" ref="overview_text">
+              <div class="details" ref="details_wrapper">
+                <div class="scroll_details" ref="details_text">
+                  <div class="title">
+                    <strong>Title:</strong> {{ tvShow.name }}
+                  </div>
+                  <div class="original_title">
+                    <strong>Original Title:</strong> {{ tvShow.original_name }}
+                  </div>
+                  <div class="genre" v-if="tvShow.genres">
+                    <strong>Genre: </strong>
+                    <span v-for="genre in tvShow.genres" :key="genre.id">
+                      {{ genre.name }}
+                    </span>
+                  </div>
+                  <div class="language">
+                    <strong>Original Language: </strong>
+                    <span v-if="tvShow.thereIsFlag">
+                      <flag :iso="tvShow.flag_svg" />
+                    </span>
+                    <span v-else>{{ tvShow.original_language }}</span>
+                  </div>
+                  <div class="vote">
+                    <strong>Rating: </strong>
+                    <font-awesome-icon
+                      icon="fa-solid fa-star"
+                      v-for="star in getRating(tvShow.vote_average)"
+                      :key="star + 'full'"
+                    />
+                    <font-awesome-icon
+                      icon="fa-regular fa-star"
+                      v-for="star in 5 - getRating(tvShow.vote_average)"
+                      :key="star + 'empty'"
+                    />
+                  </div>
+                  <div class="cast" v-if="tvShow.cast">
+                    <strong>Cast: </strong>
+                    <span v-for="actor in tvShow.cast" :key="actor.id">
+                      {{ actor.name }}
+                    </span>
+                  </div>
+                  <div class="overview">
                     <strong>Overview:</strong> {{ tvShow.overview }}
                   </div>
                 </div>
@@ -127,14 +127,14 @@ export default {
   methods: {
     hasToScroll() {
       //console.log(this.$refs.overview_text, this.$refs.overview_wrapper);
-      const textToScrollAll = this.$refs.overview_text;
-      const wrapperAll = this.$refs.overview_wrapper;
+      const textToScrollAll = this.$refs.details_text;
+      const wrapperAll = this.$refs.details_wrapper;
       for (let i = 0; i < textToScrollAll.length; i++) {
         const textToScroll = textToScrollAll[i];
         const wrapper = wrapperAll[i];
         //console.log(textToScroll, wrapper);
         //console.log(textToScroll.clientHeight, wrapper.clientHeight);
-        if (textToScroll.clientHeight > wrapper.clientHeight) {
+        if (textToScroll.clientHeight + 10 > wrapper.clientHeight) {
           textToScroll.classList.add("scroll");
           //console.log(textToScroll, "add");
         }
@@ -197,24 +197,20 @@ export default {
     opacity: 0;
     transition: all 500ms linear;
     cursor: context-menu;
-    .title,
-    .original_title,
-    .language,
-    .vote,
-    .overview {
-      padding: 0.25rem 0;
-    }
-    .overview {
-      max-height: 40%;
-      overflow: hidden;
+    overflow: hidden;
+    .scroll_details {
       transition: all 10s linear;
-      .scroll_overview {
-        height: 100%;
+      .title,
+      .original_title,
+      .language,
+      .vote,
+      .overview {
+        padding: 0.25rem 0;
       }
     }
-    &:hover .scroll {
-      animation: autoScroll 20s 2s linear;
-    }
+  }
+  &:hover .scroll {
+    animation: autoScroll 10s 2s linear forwards;
   }
   &:hover .details {
     opacity: 0.9;
@@ -225,30 +221,8 @@ export default {
 @keyframes autoScroll {
   0% {
   }
-  70% {
-    transform: translateY(-50%);
-  }
-  90% {
-    transform: translateY(-50%);
-  }
   100% {
-    transform: translateY(0);
+    transform: translateY(-70%);
   }
-}
-
-/* grid-structure */
-.container {
-  max-width: 1400px;
-  margin: 2rem auto;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.col-5 {
-  width: calc(100% / 5);
-  padding: 1rem 0.5rem;
 }
 </style>
