@@ -2,7 +2,6 @@
   <div id="app">
     <SiteHeader />
     <SiteMain />
-    <footer>Site Footer Here</footer>
   </div>
 </template>
 

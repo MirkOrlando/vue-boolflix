@@ -5,7 +5,11 @@
         <div class="logo">
           <img src="@/assets/img/logo.png" alt="" />
           <form action="get" @submit.prevent="callAPI">
-            <input type="text" v-model="query" />
+            <input
+              type="text"
+              placeholder="Search something..."
+              v-model="query"
+            />
             <button>
               <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
             </button>
@@ -32,6 +36,10 @@ export default {
       query: "",
       loadingMovies: true,
       loadingTvShows: true,
+      loadingCastMovies: true,
+      loadingCastTvShows: true,
+      loadingGenreMovies: true,
+      loadingGenreTvShows: true,
       errorMovies: null,
       errorTvShows: null,
       movies: null,
@@ -164,14 +172,15 @@ export default {
             //console.log(response);
             //console.log(cast);
             movie.cast = cast;
+            this.loadingCastMovies = false;
             //console.log(movie.cast);
           })
           .catch((error) => {
             console.log(error);
           });
       });
+      //console.log(state.movies);
     },
-    //https://api.themoviedb.org/3/tv/1100/credits?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US
     getCastTvShow() {
       state.tvShows.forEach((tvShow) => {
         axios
@@ -189,6 +198,7 @@ export default {
             //console.log(response);
             //console.log(cast);
             tvShow.cast = cast;
+            this.loadingCastTvShows = false;
             //console.log(tvShow.cast);
           })
           .catch((error) => {
@@ -217,6 +227,36 @@ export default {
               });
             }
             movie.genres = genresToPush;
+            this.loadingGenreMovies = false;
+            //console.log(movie);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
+    getGenreTvShow() {
+      state.tvShows.forEach((tvShow) => {
+        //console.log(movie);
+        axios
+          .get(
+            "https://api.themoviedb.org/3/genre/tv/list?api_key=d755a2b665e5b254648b51fb19699f56"
+          )
+          .then((response) => {
+            //console.log(response);
+            const genres = response.data.genres;
+            const genresToPush = [];
+            if (tvShow.genre_ids.length > 0) {
+              tvShow.genre_ids.forEach((genre_id) => {
+                genres.forEach((genre) => {
+                  if (genre_id === genre.id) {
+                    genresToPush.push(genre);
+                  }
+                });
+              });
+            }
+            tvShow.genres = genresToPush;
+            this.loadingGenreTvShows = false;
             //console.log(movie);
           })
           .catch((error) => {
@@ -259,6 +299,7 @@ export default {
           this.getLanguageFlagTvShow();
           this.getLinkImgTvShows();
           this.getCastTvShow();
+          this.getGenreTvShow();
         })
         .catch((error) => {
           //console.log(error);
@@ -266,7 +307,14 @@ export default {
           state.errorTvShows = this.errorTvShows;
         });
       this.query = "";
-      if (!this.loadingMovies && !this.loadingTvShows) {
+      if (
+        !this.loadingMovies &&
+        !this.loadingTvShows &&
+        !this.loadingCastMovies &&
+        !this.loadingCastTvShows &&
+        !this.loadingGenreMovies &&
+        !this.loadingGenreTvShows
+      ) {
         state.loading = false;
       }
     },
@@ -283,7 +331,7 @@ header {
   input,
   button {
     padding: 0.5rem;
-    background-color: #4a5354;
+    background-color: #3a4242;
     border: 1px solid #313738;
     color: #b3b2b2;
     margin: 0.25rem 0;

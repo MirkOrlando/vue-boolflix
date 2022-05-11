@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container">
-      <div class="row" v-if="!isLoading">
+      <div class="row">
         <div class="col-5" v-for="movie in showMovies" :key="movie.id">
           <div class="card">
             <div class="poster" @mouseenter="hasToScroll">
@@ -13,7 +13,7 @@
                 <div class="original_title">
                   <strong>Original Title:</strong> {{ movie.original_title }}
                 </div>
-                <div class="genre">
+                <div class="genre" v-if="movie.genres">
                   <strong>Genre: </strong>
                   <span v-for="genre in movie.genres" :key="genre.id">
                     {{ genre.name }}
@@ -40,7 +40,7 @@
                     :key="star + 'full'"
                   />
                 </div>
-                <div class="cast">
+                <div class="cast" v-if="movie.cast">
                   <strong>Cast: </strong>
                   <span v-for="actor in movie.cast" :key="actor.cast_id">
                     {{ actor.name }}
@@ -66,6 +66,12 @@
                 <div class="original_title">
                   <strong>Original Title:</strong> {{ tvShow.original_name }}
                 </div>
+                <div class="genre" v-if="tvShow.genres">
+                  <strong>Genre: </strong>
+                  <span v-for="genre in tvShow.genres" :key="genre.id">
+                    {{ genre.name }}
+                  </span>
+                </div>
                 <div class="language">
                   <strong>Original Language: </strong>
                   <span v-if="tvShow.thereIsFlag">
@@ -86,7 +92,7 @@
                     :key="star + 'empty'"
                   />
                 </div>
-                <div class="cast">
+                <div class="cast" v-if="tvShow.cast">
                   <strong>Cast: </strong>
                   <span v-for="actor in tvShow.cast" :key="actor.id">
                     {{ actor.name }}
@@ -139,15 +145,22 @@ export default {
     isLoading() {
       return state.loading;
     },
+    /*     showCast() {
+      return (object) => {
+        if (object.cast) {
+          return object.cast;
+        }
+      };
+    }, */
     showMovies() {
-      if (!state.loadingMovies) {
+      if (!state.loading) {
         return state.movies;
       } else {
         return this.movies;
       }
     },
     showTvShows() {
-      if (!state.loadingTvShows) {
+      if (!state.loading) {
         return state.tvShows;
       } else {
         return this.tvShows;
