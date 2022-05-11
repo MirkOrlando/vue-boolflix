@@ -6,7 +6,9 @@ const state = Vue.observable({
     tvShows: null,
     errorMovies: null,
     errorTvShows: null,
-    loading: null
+    loading: true,
+    detailsWrapper: null,
+    detailsText: null,
 })
 
 export default state
