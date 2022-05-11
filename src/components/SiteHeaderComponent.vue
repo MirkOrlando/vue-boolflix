@@ -1,14 +1,18 @@
 <template>
   <header>
-    <nav>
-      <div class="logo">
-        <img src="@/assets/img/logo.png" alt="" />
-        <form action="get" @submit.prevent="callAPI">
-          <input type="text" v-model="query" />
-          <button>Search</button>
-        </form>
-      </div>
-    </nav>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <img src="@/assets/img/logo.png" alt="" />
+          <form action="get" @submit.prevent="callAPI">
+            <input type="text" v-model="query" />
+            <button>
+              <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+            </button>
+          </form>
+        </div>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -143,6 +147,30 @@ export default {
         }
       });
     },
+    getCastMovie() {
+      state.movies.forEach((movie) => {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=d755a2b665e5b254648b51fb19699f56`
+          )
+          .then((response) => {
+            //console.log(response);
+            const cast = [];
+            for (let i = 0; i < 5; i++) {
+              if (response.data.cast.length !== 0 && response.data.cast[i]) {
+                cast.push(response.data.cast[i]);
+              }
+            }
+            //console.log(response);
+            //console.log(cast);
+            movie.cast = cast;
+            console.log(movie.cast);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
     callAPI() {
       axios
         .get(this.getFullLinkAPIMovies())
@@ -158,6 +186,7 @@ export default {
           //console.log(state.loading);
           this.getLanguageFlagMovie();
           this.getLinkImgMovies();
+          this.getCastMovie();
         })
         .catch((error) => {
           //console.log(error);
@@ -193,5 +222,23 @@ header {
   padding: 1rem 0;
   background-color: $darkestColor;
   border-bottom: 10px solid $liteDarkColor;
+  input,
+  button {
+    padding: 0.5rem;
+    background-color: #4a5354;
+    border: 1px solid #313738;
+    color: #b3b2b2;
+    margin: 0.25rem 0;
+  }
+  input {
+    border-right: none;
+    width: 300px;
+  }
+  button {
+    border-left: none;
+  }
+  input:focus-visible {
+    outline: none;
+  }
 }
 </style>

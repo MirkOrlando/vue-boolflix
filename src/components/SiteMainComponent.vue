@@ -34,6 +34,12 @@
                     :key="index"
                   />
                 </div>
+                <div class="cast">
+                  <strong>Cast: </strong>
+                  <span v-for="actor in movie.cast" :key="actor.cast_id">
+                    {{ actor.name }}
+                  </span>
+                </div>
                 <div class="overview" ref="overview_wrapper">
                   <div class="scroll_overview" ref="overview_text">
                     <strong>Overview:</strong> {{ movie.overview }}
@@ -190,7 +196,10 @@ export default {
 @keyframes autoScroll {
   0% {
   }
-  80% {
+  70% {
+    transform: translateY(-50%);
+  }
+  90% {
     transform: translateY(-50%);
   }
   100% {
