@@ -217,7 +217,7 @@ export default {
               });
             }
             movie.genres = genresToPush;
-            console.log(movie);
+            //console.log(movie);
           })
           .catch((error) => {
             console.log(error);
@@ -266,6 +266,9 @@ export default {
           state.errorTvShows = this.errorTvShows;
         });
       this.query = "";
+      if (!this.loadingMovies && !this.loadingTvShows) {
+        state.loading = false;
+      }
     },
   },
 };

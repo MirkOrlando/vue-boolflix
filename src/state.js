@@ -4,10 +4,9 @@ const state = Vue.observable({
     query: '',
     movies: null,
     tvShows: null,
-    loadingMovies: null,
     errorMovies: null,
-    loadingTvShows: null,
     errorTvShows: null,
+    loading: null
 })
 
 export default state

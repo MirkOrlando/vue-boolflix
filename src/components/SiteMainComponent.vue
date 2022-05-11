@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container">
-      <div class="row">
+      <div class="row" v-if="!isLoading">
         <div class="col-5" v-for="movie in showMovies" :key="movie.id">
           <div class="card">
             <div class="poster" @mouseenter="hasToScroll">
@@ -12,6 +12,12 @@
                 </div>
                 <div class="original_title">
                   <strong>Original Title:</strong> {{ movie.original_title }}
+                </div>
+                <div class="genre">
+                  <strong>Genre: </strong>
+                  <span v-for="genre in movie.genres" :key="genre.id">
+                    {{ genre.name }}
+                  </span>
                 </div>
                 <div class="language">
                   <strong>Original Language: </strong>
@@ -24,14 +30,14 @@
                   <strong>Rating: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
-                    v-for="(star, index) in getRating(movie.vote_average)"
-                    :key="index"
+                    v-for="star in getRating(movie.vote_average)"
+                    :key="star + 'full'"
                   />
 
                   <font-awesome-icon
                     icon="fa-regular fa-star"
-                    v-for="(star, index) in 5 - getRating(movie.vote_average)"
-                    :key="index"
+                    v-for="star in 5 - getRating(movie.vote_average)"
+                    :key="star + 'full'"
                   />
                 </div>
                 <div class="cast">
@@ -71,13 +77,13 @@
                   <strong>Rating: </strong>
                   <font-awesome-icon
                     icon="fa-solid fa-star"
-                    v-for="(star, index) in getRating(tvShow.vote_average)"
-                    :key="index"
+                    v-for="star in getRating(tvShow.vote_average)"
+                    :key="star + 'full'"
                   />
                   <font-awesome-icon
                     icon="fa-regular fa-star"
-                    v-for="(star, index) in 5 - getRating(tvShow.vote_average)"
-                    :key="index"
+                    v-for="star in 5 - getRating(tvShow.vote_average)"
+                    :key="star + 'empty'"
                   />
                 </div>
                 <div class="cast">
@@ -130,6 +136,9 @@ export default {
     },
   },
   computed: {
+    isLoading() {
+      return state.loading;
+    },
     showMovies() {
       if (!state.loadingMovies) {
         return state.movies;
