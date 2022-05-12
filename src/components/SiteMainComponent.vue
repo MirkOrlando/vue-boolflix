@@ -11,14 +11,14 @@
     </div>
     <div class="container" v-else>
       <div class="row">
-        <!--         <h2>Movies:</h2> -->
+        <h2 v-if="showMovies.length > 0">Movies:</h2>
         <MovieCard
           :movie="movie"
           v-for="movie in showMovies"
           :key="movie.id"
           @onposter="hasToScroll"
         />
-        <!--         <h2>Tv Shows:</h2> -->
+        <h2 v-if="showTvShows.length > 0">Tv Shows:</h2>
         <TvShowCard
           :tvShow="tvShow"
           v-for="tvShow in showTvShows"
@@ -100,15 +100,18 @@ export default {
 <style lang="scss" scoped>
 main {
   min-height: calc(100vh - 237px);
-  padding: 1rem 0;
   background-color: $darkestColor;
   color: $lightestColor;
+  h2 {
+    width: 100%;
+    margin-top: 1rem;
+  }
 }
 
 .init_message {
   font-size: 1.5rem;
   text-align: center;
-  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 /* loading */

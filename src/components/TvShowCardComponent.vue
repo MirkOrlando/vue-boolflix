@@ -1,6 +1,6 @@
 <template>
   <div class="col-5">
-    <div class="card">
+    <div class="card" @mouseenter="getRefsState">
       <div class="poster" @mouseenter="$emit('onposter')">
         <img :src="tvShow.fullLinkPoster" :alt="tvShow.original_name" />
         <div class="details" ref="detailsWrapper">

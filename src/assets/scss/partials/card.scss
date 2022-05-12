@@ -39,7 +39,7 @@
                     color: gold;
                 }
                 span::after {
-                    content: '-';
+                    content: '- ';
                 }
                 span:last-child::after {
                     content: '';
@@ -47,7 +47,10 @@
             }
         }
         &:hover .scroll {
-            animation: autoScroll 10s 2s linear;
+            animation: autoScroll 20s 2s linear;
+        }
+        &:active .scroll {
+            animation-play-state: paused;
         }
         &:hover .details {
             opacity: 0.9;
