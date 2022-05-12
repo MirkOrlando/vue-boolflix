@@ -99,15 +99,14 @@ main {
   min-height: calc(100vh - 237px);
   background-color: $darkestColor;
   color: $lightestColor;
+  .init_message {
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 2rem;
+  }
   h2 {
     width: 100%;
     margin-top: 1rem;
   }
-}
-
-.init_message {
-  font-size: 1.5rem;
-  text-align: center;
-  padding-top: 1rem;
 }
 </style>
