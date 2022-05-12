@@ -3,12 +3,7 @@
     <p class="init_message" v-if="!isSearching && !success">
       Nothing to show... Start a new search!
     </p>
-    <div class="loading-view" v-else-if="isLoading && !success">
-      <p>Loading...</p>
-      <div class="circle_bg">
-        <div class="circle_sm"></div>
-      </div>
-    </div>
+    <Loading v-else-if="isLoading && !success" />
     <div class="container" v-else>
       <div class="row">
         <h2 v-if="showMovies.length > 0">Movies:</h2>
@@ -34,12 +29,14 @@
 import state from "@/state.js";
 import MovieCard from "@/components/MovieCardComponent.vue";
 import TvShowCard from "@/components/TvShowCardComponent.vue";
+import Loading from "@/components/LoadingComponent.vue";
 
 export default {
   name: "SiteMainComponent",
   components: {
     MovieCard,
     TvShowCard,
+    Loading,
   },
   data() {
     return {
@@ -112,51 +109,5 @@ main {
   font-size: 1.5rem;
   text-align: center;
   padding-top: 1rem;
-}
-
-/* loading */
-.loading-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  [class^="circle"] {
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-  }
-  .circle_bg {
-    margin: 1rem;
-    background-color: #3a4242;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: getBigger 2s linear infinite;
-    .circle_sm {
-      background-color: #212121;
-      width: 40px;
-      animation: getSmaller 2s linear infinite;
-    }
-  }
-}
-
-/* animation */
-@keyframes getSmaller {
-  50% {
-    transform: scale(0.4);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes getBigger {
-  50% {
-    transform: scale(1.3);
-  }
-
-  100% {
-    transform: scale(1);
-  }
 }
 </style>
