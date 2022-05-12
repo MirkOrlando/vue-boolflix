@@ -2,11 +2,15 @@ import Vue from 'vue'
 
 const state = Vue.observable({
     query: '',
+    searching: false,
+    statusMovies: null,
+    statusTvShows: null,
     movies: null,
     tvShows: null,
     errorMovies: null,
     errorTvShows: null,
-    loading: true,
+    loadingMovies: true,
+    loadingTvShows: true,
     detailsWrapper: null,
     detailsText: null,
 })

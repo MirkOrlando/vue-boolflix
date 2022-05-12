@@ -38,11 +38,6 @@
                 .fa-star {
                     color: gold;
                 }
-                span:hover {
-                    text-decoration: underline;
-                    color: rgb(0, 128, 87);
-                    cursor: pointer;
-                }
                 span::after {
                     content: '-';
                 }

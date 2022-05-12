@@ -22,10 +22,8 @@ export default {
       query: "",
       loadingMovies: true,
       loadingTvShows: true,
-      loadingCastMovies: true,
-      loadingCastTvShows: true,
-      loadingGenreMovies: true,
-      loadingGenreTvShows: true,
+      statusMovies: null,
+      statusTvShows: null,
       errorMovies: null,
       errorTvShows: null,
       movies: null,
@@ -254,22 +252,29 @@ export default {
       }
     },
     callAPI() {
+      state.loadingMovies = true;
+      state.loadingTvShows = true;
+      state.statusMovies = null;
+      state.statusTvShows = null;
+      state.searching = true;
       axios
         .get(this.getFullLinkAPIMovies())
         .then((response) => {
-          //console.log(response);
+          console.log(response);
           //console.log(response.data.results);
           this.movies = response.data.results;
-          this.loadingMovies = false;
-          state.loadingMovies = this.loadingMovies;
+          //console.log(this.movies);
           state.movies = this.movies;
-
           //console.log(state.movies);
           //console.log(state.loading);
           this.getLanguageFlagMovie();
           this.getLinkImgMovies();
           this.getCastMovie();
           this.getGenreMovie();
+          this.loadingMovies = false;
+          state.loadingMovies = this.loadingMovies;
+          this.statusMovies = response.status;
+          state.statusMovies = this.statusMovies;
         })
         .catch((error) => {
           //console.log(error);
@@ -279,16 +284,19 @@ export default {
       axios
         .get(this.getFullLinkAPITvShows())
         .then((response) => {
-          //console.log(response);
+          console.log(response);
           //console.log(response.data.results);
           this.tvShows = response.data.results;
-          this.loadingTvShows = false;
-          state.loadingTvShows = this.loadingTvShows;
           state.tvShows = this.tvShows;
           this.getLanguageFlagTvShow();
           this.getLinkImgTvShows();
           this.getCastTvShow();
           this.getGenreTvShow();
+          this.loadingTvShows = false;
+          state.loadingTvShows = this.loadingTvShows;
+          this.statusTvShows = response.status;
+          state.statusTvShows = this.statusTvShows;
+          state.searching = false;
         })
         .catch((error) => {
           //console.log(error);
@@ -296,16 +304,6 @@ export default {
           state.errorTvShows = this.errorTvShows;
         });
       this.query = "";
-      if (
-        !this.loadingMovies &&
-        !this.loadingTvShows &&
-        !this.loadingCastMovies &&
-        !this.loadingCastTvShows &&
-        !this.loadingGenreMovies &&
-        !this.loadingGenreTvShows
-      ) {
-        state.loading = false;
-      }
     },
   },
 };

@@ -1,15 +1,24 @@
 <template>
   <main>
-    <div class="container" v-if="!isLoading">
+    <p class="init_message" v-if="!isSearching && !success">
+      Nothing to show... Start a new search!
+    </p>
+    <div class="loading-view" v-else-if="isLoading && !success">
+      <p>Loading...</p>
+      <div class="circle_bg">
+        <div class="circle_sm"></div>
+      </div>
+    </div>
+    <div class="container" v-else>
       <div class="row">
-        <h2>Movies:</h2>
+        <!--         <h2>Movies:</h2> -->
         <MovieCard
           :movie="movie"
           v-for="movie in showMovies"
           :key="movie.id"
           @onposter="hasToScroll"
         />
-        <h2>Tv Shows:</h2>
+        <!--         <h2>Tv Shows:</h2> -->
         <TvShowCard
           :tvShow="tvShow"
           v-for="tvShow in showTvShows"
@@ -18,19 +27,6 @@
         />
       </div>
     </div>
-    <!--     <p
-      v-else-if="
-        isLoading && (state.movies.length !== 0 || state.tvShows.length !== 0)
-      "
-    >
-      Nothing to show, star a new search!
-    </p>
-    <div class="loading-view" v-else>
-      <p>Loading...</p>
-      <div class="circle_bg">
-        <div class="circle_sm"></div>
-      </div>
-    </div> -->
   </main>
 </template>
 
@@ -65,22 +61,32 @@ export default {
     },
   },
   computed: {
+    isSearching() {
+      if (state.searching) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     isLoading() {
-      return state.loading;
+      if (!state.loadingMovies && !state.loadingTvShows) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    success() {
+      if (state.statusMovies === 200 && state.statusTvShows === 200) {
+        return true;
+      } else {
+        return false;
+      }
     },
     showMovies() {
-      if (!state.loading) {
-        return state.movies;
-      } else {
-        return this.movies;
-      }
+      return state.movies;
     },
     showTvShows() {
-      if (!state.loading) {
-        return state.tvShows;
-      } else {
-        return this.tvShows;
-      }
+      return state.tvShows;
     },
     getRating() {
       return (number) => {
@@ -97,10 +103,12 @@ main {
   padding: 1rem 0;
   background-color: $darkestColor;
   color: $lightestColor;
-  h2 {
-    width: 100%;
-    margin: 1rem 0 0 0.5rem;
-  }
+}
+
+.init_message {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 /* loading */
