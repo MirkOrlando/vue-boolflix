@@ -1,10 +1,19 @@
 <template>
-  <form action="get" @submit.prevent="callAPI">
-    <input type="text" placeholder="Search something..." v-model="query" />
-    <button>
+  <div class="search" ref="search">
+    <div class="icon" @click="getActiveSearch()">
       <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-    </button>
-  </form>
+    </div>
+    <div class="input" ref="input">
+      <input
+        type="text"
+        class="input"
+        placeholder="Search something..."
+        ref="text"
+        v-model="query"
+        @keyup="callAPI"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -31,6 +40,11 @@ export default {
     };
   },
   methods: {
+    getActiveSearch() {
+      this.$refs.search.classList.toggle("active");
+      this.$refs.input.classList.toggle("active");
+      this.$refs.text.focus();
+    },
     getFullLinkAPIMovies() {
       // &language=en-US&page=1&include_adult=false&query=i am
       let fullLink;
@@ -310,22 +324,63 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input,
-button {
-  padding: 0.5rem;
-  background-color: #3a4242;
-  border: 1px solid #313738;
-  color: #b3b2b2;
-  margin: 0.25rem 0;
-}
-input {
-  border-right: none;
-  width: 300px;
-}
-button {
-  border-left: none;
-}
-input:focus-visible {
+.search {
+  display: flex;
+  width: 30px;
+  height: 40px;
+  transition: width 500ms linear;
   outline: none;
+  border: none;
+  overflow: hidden;
+  &.active {
+    width: 330px;
+    border: 1px solid $lightestColor;
+  }
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    color: $lightestColor;
+    cursor: pointer;
+    /*     padding: 0.5rem;
+    border: none; */
+  }
+  .input {
+    position: relative;
+    width: 0px;
+    height: 40px;
+    background-color: transparent;
+    color: $lightestColor;
+    transition: width 500ms linear;
+    &.active {
+      width: 300px;
+    }
+    input {
+      position: absolute;
+      padding: 0.5rem;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+}
+/* .search:focus-within button,
+.search:focus-within input {
+  border: 1px solid $lightestColor;
+  background-color: #3a4242;
+}
+.search:focus-within input {
+  width: 300px;
+  border-left: none;
+} */
+.search:focus-within button {
+  border: none;
 }
 </style>

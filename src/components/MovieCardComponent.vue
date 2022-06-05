@@ -33,7 +33,7 @@
               <font-awesome-icon
                 icon="fa-regular fa-star"
                 v-for="star in 5 - getRating(movie.vote_average)"
-                :key="star + 'full'"
+                :key="star + 'empty'"
               />
             </div>
             <div class="cast" v-if="movie.cast">
