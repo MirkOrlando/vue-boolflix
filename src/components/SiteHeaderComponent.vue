@@ -86,10 +86,15 @@ header {
         align-items: center;
         gap: 1rem;
         font-weight: bold;
-        color: rgb(204, 204, 204);
-        transition: color 250ms linear;
-        .nav-item.active {
-          color: $lightestColor;
+        color: rgb(180, 180, 180);
+        .nav-item {
+          transition: color 250ms linear;
+          &:hover {
+            color: $lightestColor;
+          }
+          &.active {
+            color: $lightestColor;
+          }
         }
       }
     }

@@ -266,58 +266,60 @@ export default {
       }
     },
     callAPI() {
-      state.loadingMovies = true;
-      state.loadingTvShows = true;
-      state.statusMovies = null;
-      state.statusTvShows = null;
-      state.searching = true;
-      axios
-        .get(this.getFullLinkAPIMovies())
-        .then((response) => {
-          console.log(response);
-          //console.log(response.data.results);
-          this.movies = response.data.results;
-          //console.log(this.movies);
-          state.movies = this.movies;
-          //console.log(state.movies);
-          //console.log(state.loading);
-          this.getLanguageFlagMovie();
-          this.getLinkImgMovies();
-          this.getCastMovie();
-          this.getGenreMovie();
-          this.loadingMovies = false;
-          state.loadingMovies = this.loadingMovies;
-          this.statusMovies = response.status;
-          state.statusMovies = this.statusMovies;
-        })
-        .catch((error) => {
-          //console.log(error);
-          this.errorMovies = `OPS ${error}`;
-          state.errorMovies = this.errorMovies;
-        });
-      axios
-        .get(this.getFullLinkAPITvShows())
-        .then((response) => {
-          console.log(response);
-          //console.log(response.data.results);
-          this.tvShows = response.data.results;
-          state.tvShows = this.tvShows;
-          this.getLanguageFlagTvShow();
-          this.getLinkImgTvShows();
-          this.getCastTvShow();
-          this.getGenreTvShow();
-          this.loadingTvShows = false;
-          state.loadingTvShows = this.loadingTvShows;
-          this.statusTvShows = response.status;
-          state.statusTvShows = this.statusTvShows;
-          state.searching = false;
-        })
-        .catch((error) => {
-          //console.log(error);
-          this.errorTvShows = `OPS ${error}`;
-          state.errorTvShows = this.errorTvShows;
-        });
-      this.query = "";
+      if (this.query != "") {
+        state.loadingMovies = true;
+        state.loadingTvShows = true;
+        state.statusMovies = null;
+        state.statusTvShows = null;
+        state.searching = true;
+        axios
+          .get(this.getFullLinkAPIMovies())
+          .then((response) => {
+            console.log(response);
+            //console.log(response.data.results);
+            this.movies = response.data.results;
+            //console.log(this.movies);
+            state.movies = this.movies;
+            //console.log(state.movies);
+            //console.log(state.loading);
+            this.getLanguageFlagMovie();
+            this.getLinkImgMovies();
+            this.getCastMovie();
+            this.getGenreMovie();
+            this.loadingMovies = false;
+            state.loadingMovies = this.loadingMovies;
+            this.statusMovies = response.status;
+            state.statusMovies = this.statusMovies;
+          })
+          .catch((error) => {
+            //console.log(error);
+            this.errorMovies = `OPS ${error}`;
+            state.errorMovies = this.errorMovies;
+          });
+        axios
+          .get(this.getFullLinkAPITvShows())
+          .then((response) => {
+            console.log(response);
+            //console.log(response.data.results);
+            this.tvShows = response.data.results;
+            state.tvShows = this.tvShows;
+            this.getLanguageFlagTvShow();
+            this.getLinkImgTvShows();
+            this.getCastTvShow();
+            this.getGenreTvShow();
+            this.loadingTvShows = false;
+            state.loadingTvShows = this.loadingTvShows;
+            this.statusTvShows = response.status;
+            state.statusTvShows = this.statusTvShows;
+            state.searching = false;
+          })
+          .catch((error) => {
+            //console.log(error);
+            this.errorTvShows = `OPS ${error}`;
+            state.errorTvShows = this.errorTvShows;
+          });
+        //this.query = "";
+      }
     },
   },
 };
@@ -328,7 +330,7 @@ export default {
   display: flex;
   width: 30px;
   height: 40px;
-  transition: width 500ms linear;
+  transition: width 250ms linear;
   outline: none;
   border: none;
   overflow: hidden;
@@ -354,7 +356,7 @@ export default {
     height: 40px;
     background-color: transparent;
     color: $lightestColor;
-    transition: width 500ms linear;
+    transition: width 250ms linear;
     &.active {
       width: 300px;
     }
