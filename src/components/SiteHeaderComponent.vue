@@ -7,12 +7,8 @@
             <img src="@/assets/img/logo.png" alt="" @click="reset" />
           </div>
           <ul class="nav-items">
-            <li
-              class="nav-item"
-              :class="activeNavItem === index ? 'active' : ''"
-              v-for="(item, index) in navItems"
-              :key="index"
-            >
+            <li class="nav-item" :class="activeNavItem === index ? 'active' : ''" v-for="(item, index) in navItems"
+              :key="index">
               <a href="#" @click="getActiveNavItem(index)">{{ item }}</a>
             </li>
           </ul>
@@ -67,37 +63,48 @@ export default {
 header {
   background-color: $darkestColor;
   padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+
   nav {
     display: flex;
     color: $lightestColor;
+
     .nav-menu-left {
       display: flex;
       flex: 1;
       align-items: center;
       gap: 1.5rem;
+
       .logo {
         width: 120px;
+
         img {
           cursor: pointer;
         }
       }
+
       .nav-items {
         display: flex;
         align-items: center;
         gap: 1rem;
         font-weight: bold;
         color: rgb(180, 180, 180);
+
         .nav-item {
           transition: color 250ms linear;
+
           &:hover {
             color: $lightestColor;
           }
+
           &.active {
             color: $lightestColor;
           }
         }
       }
     }
+
     .nav-menu-right {
       display: flex;
       flex: 1;
