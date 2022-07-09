@@ -61,7 +61,7 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  background-color: $darkestColor;
+  background: linear-gradient(to bottom, $darkestColor, transparent);
   padding: 1rem 0;
   position: fixed;
   width: 100%;

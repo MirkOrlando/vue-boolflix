@@ -2,16 +2,20 @@
   <main>
     <div class="init_message" v-if="!isSearching && !success">
       <div class="jumbotron">
-        <img
-          src="https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?cs=srgb&dl=pexels-lumn-167699.jpg&fm=jpg"
-          alt="">
+        <img :src="linkImgPoster + jumboData.backdrop_path" alt="">
         <div class="container jumbo-text">
           <div class="details">
-            <h1>TITLE</h1>
-            <h4>Oggi al X posto in Italia</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda corrupti totam et repellat, nobis
-              dolorem beatae laboriosam ab voluptas nisi, ullam repellendus eius? Quis reprehenderit modi voluptatibus
-              nulla eum neque.</p>
+            <h1>{{ jumboData.title }}</h1>
+            <h4 v-if="jumboData.position <= 5">
+              <span class="top-10">
+                <small>Top</small>
+                <small>10</small>
+              </span>
+              Oggi al n. {{ jumboData.position }} tra i più visti in Italia
+            </h4>
+            <p>
+              {{ jumboData.overview }}
+            </p>
             <div class="action">
               <a href="#" class="btn btn-primary">Riproduci</a>
               <a href="#" class="btn btn-secondary ml-1">Altre Info</a>
@@ -20,66 +24,37 @@
         </div>
       </div>
       <!-- /.jumbotron -->
-      <div class="container">
-        <h3>I più popolari su Boolfix</h3>
-        <div class="row g-1">
-          <div class="col-5 h-100 position-relative">
-            <div class="card dropdown">
-              <img src="https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg" alt="">
-              <div class="dropdown-content">
-                <div class="details">
-                  <h4>title</h4>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet cumque quod ipsam odit provident,
-                    expedita nesciunt! Nemo eum magnam itaque excepturi labore quae repellendus adipisci odit quos,
-                    nobis autem in!</p>
-                </div>
-                <div class="metadata">
-                  <div class="genre">
-                    <strong>Genre: </strong>
-                    <span>Action</span>
+      <div class="popular_movies">
+        <div class="container">
+          <h3>I Film più popolari su Boolfix</h3>
+          <div class="row">
+            <div class="col-5 h-100 position-relative" v-for="(movie) in popMovies" :key="movie.id">
+              <div class="card dropdown">
+                <img src="https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg" alt="">
+                <div class="dropdown-content">
+                  <div class="details">
+                    <h4>title</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet cumque quod ipsam odit provident,
+                      expedita nesciunt! Nemo eum magnam itaque excepturi labore quae repellendus adipisci odit quos,
+                      nobis autem in!</p>
                   </div>
-                  <div class="language">
-                    <strong>Original Language: </strong>
-                    <span>Eng</span>
-                  </div>
-                  <div class="vote">
-                    <strong>Rating: </strong>
-                    <span>8/10</span>
-                  </div>
-                  <div class="cast">
-                    <strong>Cast: </strong>
-                    <span>Robert Downey Jr.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-5 h-100 position-relative">
-            <div class="card dropdown">
-              <img src="https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg" alt="">
-              <div class="dropdown-content">
-                <div class="details">
-                  <h4>title</h4>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet cumque quod ipsam odit provident,
-                    expedita nesciunt! Nemo eum magnam itaque excepturi labore quae repellendus adipisci odit quos,
-                    nobis autem in!</p>
-                </div>
-                <div class="metadata">
-                  <div class="genre">
-                    <strong>Genre: </strong>
-                    <span>Action</span>
-                  </div>
-                  <div class="language">
-                    <strong>Original Language: </strong>
-                    <span>Eng</span>
-                  </div>
-                  <div class="vote">
-                    <strong>Rating: </strong>
-                    <span>8/10</span>
-                  </div>
-                  <div class="cast">
-                    <strong>Cast: </strong>
-                    <span>Robert Downey Jr.</span>
+                  <div class="metadata">
+                    <div class="genre">
+                      <strong>Genre: </strong>
+                      <span>Action</span>
+                    </div>
+                    <div class="language">
+                      <strong>Original Language: </strong>
+                      <span>Eng</span>
+                    </div>
+                    <div class="vote">
+                      <strong>Rating: </strong>
+                      <span>8/10</span>
+                    </div>
+                    <div class="cast">
+                      <strong>Cast: </strong>
+                      <span>Robert Downey Jr.</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,6 +62,7 @@
           </div>
         </div>
       </div>
+      <!-- /.popular_movies -->
     </div>
     <Loading v-else-if="isLoading && !success" />
     <div class="container" v-else>
@@ -105,6 +81,7 @@ import state from "@/state.js";
 import MovieCard from "@/components/MovieCardComponent.vue";
 import TvShowCard from "@/components/TvShowCardComponent.vue";
 import Loading from "@/components/LoadingComponent.vue";
+import axios from "axios";
 
 export default {
   name: "SiteMainComponent",
@@ -118,6 +95,9 @@ export default {
       loading: null,
       error: null,
       movies: null,
+      popMovies: null,
+      jumboData: null,
+      linkImgPoster: "https://image.tmdb.org/t/p/original/",
     };
   },
   methods: {
@@ -131,6 +111,31 @@ export default {
         //console.log(state.detailsText, "scroll");
       }
     },
+    getPopMovies() {
+      axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US&page=1')
+        .then((response) => {
+          console.log(response);
+          this.popMovies = response.data.results;
+          this.getRandomJumbo();
+        })
+        .catch((e) => { console.log(e); })
+    },
+    getRandomJumbo() {
+      //console.log(this.popMovies.length);
+      let i;
+      if (this.popMovies.lenght > 10) {
+        i = Math.floor(Math.random() * 10);
+      } else {
+        i = Math.floor(Math.random() * this.popMovies.length);
+      }
+      //console.log(i);
+      this.jumboData = this.popMovies[i];
+      //console.log(this.jumboData);
+      this.jumboData.position = i + 1;
+    }
+  },
+  created() {
+    this.getPopMovies();
   },
   computed: {
     isSearching() {
@@ -210,7 +215,7 @@ main {
         display: block;
         max-height: 100vh;
         object-fit: cover;
-        object-position: center;
+        object-position: top;
         width: 100%;
       }
 
@@ -229,11 +234,46 @@ main {
           width: max(40%);
           padding-bottom: 6rem;
 
+          h1 {
+            font-size: 3rem;
+            padding: 1rem 0;
+          }
+
+          h4 {
+            font-size: 1.25rem;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .top-10 {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              font-size: 0.75rem;
+              text-transform: uppercase;
+              padding: 0.1rem;
+              border-radius: 0.25rem;
+              color: $darkestColor;
+              background-color: #dc1a28;
+            }
+
+          }
+
+          p {
+            padding: 0.25rem 0;
+            line-height: 1.25rem;
+          }
+
           .action {
             padding: 1rem 0;
           }
         }
       }
+    }
+
+    .card {
+      padding: 0 0.25rem;
     }
 
     .dropdown {
@@ -248,7 +288,10 @@ main {
 
       .dropdown-content {
         display: none;
-        font-size: 0.5rem;
+        position: absolute;
+        height: 80%;
+        overflow-y: auto;
+        font-size: 0.75rem;
         opacity: 1;
         background-color: $darkestColor;
         transition: all 1000ms;
@@ -256,7 +299,7 @@ main {
       }
 
       &:hover {
-        transform: translateY(-50%) scale(2);
+        transform: translateY(-40%) scale(1.3);
         z-index: 200;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
@@ -269,6 +312,19 @@ main {
 
     }
 
+    .popular_movies {
+      margin-top: -4rem;
+
+      h3 {
+        position: relative;
+        padding: 1rem 0;
+      }
+
+      .row {
+        flex-wrap: nowrap;
+        overflow-x: visible;
+      }
+    }
   }
 
   h2 {
