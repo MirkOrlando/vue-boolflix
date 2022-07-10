@@ -3,22 +3,24 @@
     <div class="init_message" v-if="!isSearching && !success">
       <div class="jumbotron">
         <img :src="linkImgPoster + jumboData.backdrop_path" alt="">
-        <div class="container jumbo-text">
-          <div class="details">
-            <h1>{{ jumboData.title }}</h1>
-            <h4 v-if="jumboData.position <= 5">
-              <span class="top-10">
-                <small>Top</small>
-                <small>10</small>
-              </span>
-              Oggi al n. {{ jumboData.position }} tra i più visti in Italia
-            </h4>
-            <p>
-              {{ jumboData.overview }}
-            </p>
-            <div class="action">
-              <a href="#" class="btn btn-primary">Riproduci</a>
-              <a href="#" class="btn btn-secondary ml-1">Altre Info</a>
+        <div class="jumbo-text">
+          <div class="container">
+            <div class="details">
+              <h1>{{ jumboData.title }}</h1>
+              <h4 v-if="jumboData.position <= 5">
+                <span class="top-10">
+                  <small>Top</small>
+                  <small>10</small>
+                </span>
+                Oggi al n. {{ jumboData.position }} tra i più visti in Italia
+              </h4>
+              <p>
+                {{ jumboData.overview }}
+              </p>
+              <div class="action">
+                <a href="#" class="btn btn-primary">Riproduci</a>
+                <a href="#" class="btn btn-secondary ml-1">Altre Info</a>
+              </div>
             </div>
           </div>
         </div>
@@ -27,33 +29,37 @@
       <div class="popular_movies">
         <div class="container">
           <h3>I Film più popolari su Boolfix</h3>
-          <div class="row">
-            <div class="col-5 h-100 position-relative" v-for="(movie) in popMovies" :key="movie.id">
-              <div class="card dropdown">
-                <img src="https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg" alt="">
-                <div class="dropdown-content">
-                  <div class="details">
-                    <h4>title</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet cumque quod ipsam odit provident,
-                      expedita nesciunt! Nemo eum magnam itaque excepturi labore quae repellendus adipisci odit quos,
-                      nobis autem in!</p>
-                  </div>
-                  <div class="metadata">
-                    <div class="genre">
-                      <strong>Genre: </strong>
-                      <span>Action</span>
+          <div class="wrapper">
+            <div class="next" @click="scrollToLeft()">NEXT</div>
+            <div class="row wrap g-1">
+              <div class="col-5 h-100 position-relative movie" :id="index != 0 && index % 5 === 0 ? index : ''"
+                v-for="(movie, index) in popMovies" :key="movie.id">
+                <div class="card-movie dropdown">
+                  <img :src="linkImgPoster + movie.backdrop_path" alt="">
+                  <div class="dropdown-content">
+                    <div class="details">
+                      <h4>{{ movie.title }}</h4>
+                      <p>
+                        {{ movie.overview }}
+                      </p>
                     </div>
-                    <div class="language">
-                      <strong>Original Language: </strong>
-                      <span>Eng</span>
-                    </div>
-                    <div class="vote">
-                      <strong>Rating: </strong>
-                      <span>8/10</span>
-                    </div>
-                    <div class="cast">
-                      <strong>Cast: </strong>
-                      <span>Robert Downey Jr.</span>
+                    <div class="metadata">
+                      <div class="genre">
+                        <strong>Genre: </strong>
+                        <span>Action</span>
+                      </div>
+                      <div class="language">
+                        <strong>Original Language: </strong>
+                        <span>Eng</span>
+                      </div>
+                      <div class="vote">
+                        <strong>Rating: </strong>
+                        <span>8/10</span>
+                      </div>
+                      <div class="cast">
+                        <strong>Cast: </strong>
+                        <span>Robert Downey Jr.</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -98,6 +104,9 @@ export default {
       popMovies: null,
       jumboData: null,
       linkImgPoster: "https://image.tmdb.org/t/p/original/",
+      wrapClasses: {
+        margin_row_left: false,
+      }
     };
   },
   methods: {
@@ -111,10 +120,23 @@ export default {
         //console.log(state.detailsText, "scroll");
       }
     },
+    scrollToLeft() {
+      console.log(document.querySelector('.popular_movies .container').getBoundingClientRect().width)
+      const containerLenght = document.querySelector('.popular_movies .container').getBoundingClientRect().width;
+      //const gap = 0.5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+      console.log('next');
+      //scrollIntoView({ behavior: "smooth", inline: "start" });
+      //const movieColLength = document.querySelector('.movie').getBoundingClientRect().width;
+      //const lengthToScroll = movieColLength * 5 + gap * 4;
+      const lengthToScroll = containerLenght;
+      console.log(lengthToScroll);
+      document.querySelector('.popular_movies .row').scrollBy({ top: 0, left: lengthToScroll, behavior: "smooth" })
+      this.wrapClasses.margin_row_left = true
+    },
     getPopMovies() {
       axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US&page=1')
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           this.popMovies = response.data.results;
           this.getRandomJumbo();
         })
@@ -175,6 +197,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.col-5 {
+  width: calc((100% - 5rem) / 5);
+  flex-shrink: 0;
+
+  &:first-child {
+    margin-left: 2rem;
+  }
+
+  &:last-child {
+    margin-right: 2rem;
+  }
+}
+
 .btn {
   padding: 0.5rem 1rem;
   border-radius: 0.35rem;
@@ -226,76 +261,75 @@ main {
         width: 100%;
         background: linear-gradient(45deg, black, transparent);
 
-        .details {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
+        .container {
           height: 100%;
-          width: max(40%);
-          padding-bottom: 6rem;
 
-          h1 {
-            font-size: 3rem;
-            padding: 1rem 0;
-          }
-
-          h4 {
-            font-size: 1.25rem;
-            padding: 0.5rem 0;
+          .details {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 100%;
+            width: max(40%);
+            padding-bottom: 6rem;
 
-            .top-10 {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              font-size: 0.75rem;
-              text-transform: uppercase;
-              padding: 0.1rem;
-              border-radius: 0.25rem;
-              color: $darkestColor;
-              background-color: #dc1a28;
+            h1 {
+              font-size: 3rem;
+              padding: 1rem 0;
             }
 
-          }
+            h4 {
+              font-size: 1.25rem;
+              padding: 0.5rem 0;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
 
-          p {
-            padding: 0.25rem 0;
-            line-height: 1.25rem;
-          }
+              .top-10 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                padding: 0.1rem;
+                border-radius: 0.25rem;
+                color: $darkestColor;
+                background-color: #dc1a28;
+              }
 
-          .action {
-            padding: 1rem 0;
+            }
+
+            p {
+              padding: 0.25rem 0;
+              line-height: 1.25rem;
+            }
+
+            .action {
+              padding: 1rem 0;
+            }
           }
         }
       }
-    }
-
-    .card {
-      padding: 0 0.25rem;
     }
 
     .dropdown {
       position: relative;
       z-index: 0;
       transform: translateY(0px);
-      transition: all 1000ms;
+      transition: all 1000ms 500ms;
 
       img {
         display: block;
       }
 
       .dropdown-content {
-        display: none;
         position: absolute;
         height: 80%;
         overflow-y: auto;
         font-size: 0.75rem;
-        opacity: 1;
+        opacity: 0;
         background-color: $darkestColor;
-        transition: all 1000ms;
         padding: 0.5rem;
+        transition: all 1000ms 500ms;
       }
 
       &:hover {
@@ -304,7 +338,6 @@ main {
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
         .dropdown-content {
-          display: block;
           opacity: 1;
         }
       }
@@ -320,9 +353,35 @@ main {
         padding: 1rem 0;
       }
 
-      .row {
-        flex-wrap: nowrap;
-        overflow-x: visible;
+      .wrapper {
+        position: relative;
+
+        .next {
+          position: absolute;
+          right: -2rem;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          background-color: #14141499;
+          z-index: 100;
+          padding: 0.5rem;
+          opacity: 0;
+          transition: opacity 250ms;
+        }
+
+        &:hover {
+          .next {
+            opacity: 1;
+          }
+        }
+
+        .wrap {
+          flex-wrap: nowrap;
+          overflow: hidden;
+          margin: 0 -2rem;
+          position: relative;
+        }
+
       }
     }
   }
