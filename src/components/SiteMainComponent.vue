@@ -104,9 +104,6 @@ export default {
       popMovies: null,
       jumboData: null,
       linkImgPoster: "https://image.tmdb.org/t/p/original/",
-      wrapClasses: {
-        margin_row_left: false,
-      }
     };
   },
   methods: {

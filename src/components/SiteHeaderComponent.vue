@@ -1,5 +1,7 @@
 <template>
   <header>
+    <span class="filter" :class="backgroundDark ? 'scrollY1' : ''">
+    </span>
     <div class="container">
       <nav>
         <div class="nav-menu-left">
@@ -40,9 +42,22 @@ export default {
     return {
       navItems: ["Home", "Serie Tv", "Movies", "Nuove Uscite", "La Mia Lista"],
       activeNavItem: 0,
+      backgroundDark: null,
     };
   },
   methods: {
+    catchScroll() {
+      window.addEventListener("scroll", this.handleWindowScroll);
+    },
+    handleWindowScroll() {
+      console.log('scrolling');
+      console.log(window.scrollY);
+      if (window.scrollY > 0) {
+        this.backgroundDark = true
+      } else {
+        this.backgroundDark = false
+      }
+    },
     reset() {
       state.movies = null;
       state.tvShows = null;
@@ -56,20 +71,43 @@ export default {
       this.activeNavItem = i;
     },
   },
+  created() {
+    this.catchScroll();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 header {
-  background: linear-gradient(to bottom, $darkestColor, transparent);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
   padding: 1rem 0;
   position: fixed;
   width: 100%;
   z-index: 100;
+  transition: background-image 250ms linear;
+
+  .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, black, $darkestColor);
+    opacity: 0;
+    transition: opacity 250ms linear;
+
+    &.scrollY1 {
+      opacity: 1;
+    }
+
+  }
 
   nav {
+    position: relative;
     display: flex;
     color: $lightestColor;
+    z-index: 110;
+
 
     .nav-menu-left {
       display: flex;
