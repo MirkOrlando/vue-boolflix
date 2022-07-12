@@ -2,12 +2,27 @@
 
 .container {
     max-width: 1400px;
-    margin: auto 2rem;
+    margin: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
+
+.container_sm {
+    max-width: 1000px;
+    margin: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
 
 .row {
     display: flex;
     flex-wrap: wrap;
+}
+
+.col-4 {
+    width: calc(100% / 4);
+    flex-shrink: 0;
 }
 
 .col-5 {
