@@ -207,33 +207,6 @@ export default {
   }
 }
 
-.btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.35rem;
-  font-weight: bold;
-  transition: all 250ms linear;
-}
-
-.btn-primary {
-  color: black;
-  background-color: white;
-
-  &:hover {
-    background-color: #ffffffcc;
-  }
-
-}
-
-.btn-secondary {
-  color: white;
-  background-color: #63645d;
-
-  &:hover {
-    background-color: #63645dcc;
-  }
-
-}
-
 main {
   min-height: calc(100vh - 80.67px);
   background-color: $darkestColor;

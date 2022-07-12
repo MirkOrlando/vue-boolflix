@@ -25,6 +25,10 @@
             </div>
           </div>
         </nav>
+        <div class="action">
+          <a href="#" class="btn btn-secondary-outline">Codice di servizio</a>
+        </div>
+        <div class="copyright">&copy; 1997-2022 Boolflix, inc.</div>
       </div>
     </footer>
   </div>
@@ -66,23 +70,28 @@ export default {
 @import "@/assets/scss/style.scss";
 
 footer {
+  font-size: 0.75rem;
   background-color: $darkestColor;
   color: grey;
   padding-top: 5rem;
 
   .social-links {
     display: flex;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 
     .link {
       margin: 0 1rem;
+
+      &:first-child {
+        margin-left: 0.75;
+      }
     }
   }
 
   .footer-items {
-    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
 
     .col-4 {
       margin-bottom: 1rem;
@@ -93,5 +102,8 @@ footer {
     }
   }
 
+  .copyright {
+    padding: 1.5rem 0 1rem;
+  }
 }
 </style>

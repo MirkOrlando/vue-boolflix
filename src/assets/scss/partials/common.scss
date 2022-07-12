@@ -26,3 +26,41 @@ a {
     color: unset;
     text-decoration: none;
 }
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.35rem;
+    font-weight: bold;
+    transition: all 250ms linear;
+}
+
+.btn-primary {
+    color: black;
+    background-color: white;
+
+    &:hover {
+        background-color: #ffffffcc;
+    }
+
+}
+
+.btn-secondary {
+    color: white;
+    background-color: #63645d;
+
+    &:hover {
+        background-color: #63645dcc;
+    }
+}
+
+.btn-secondary-outline {
+    font-weight: normal;
+    color: grey;
+    background-color: transparent;
+    border-radius: 0;
+    border: 1px solid grey;
+
+    &:hover {
+        color: white;
+    }
+}
