@@ -28,12 +28,13 @@
       <!-- /.jumbotron -->
       <div class="popular_movies">
         <div class="container">
-          <h3>I Film più popolari su Boolfix</h3>
           <div class="wrapper">
             <div class="next" @click="scrollToLeft()">NEXT</div>
+            <h3>I Film più popolari su Boolfix</h3>
             <div class="row wrap g-1">
               <div class="col-5 h-100 position-relative movie" :id="index != 0 && index % 5 === 0 ? index : ''"
-                v-for="(movie, index) in popMovies" :key="movie.id">
+                v-for="(movie, index) in popMovies" :key="movie.id" @mouseover="hasExpanded()"
+                @mouseleave="hasShrink()">
                 <div class="card-movie dropdown">
                   <img :src="linkImgPoster + movie.backdrop_path" alt="">
                   <div class="dropdown-content">
@@ -151,6 +152,16 @@ export default {
       this.jumboData = this.popMovies[i];
       //console.log(this.jumboData);
       this.jumboData.position = i + 1;
+    },
+    hasExpanded() {
+      setTimeout(() => {
+        document.querySelector('.popular_movies .row').classList.add('has_expanded')
+      }, 500);
+    },
+    hasShrink() {
+      setTimeout(() => {
+        document.querySelector('.popular_movies .row').classList.remove('has_expanded')
+      }, 1500);
     }
   },
   created() {
@@ -303,7 +314,7 @@ main {
       }
 
       &:hover {
-        transform: translateY(-40%) scale(1.3);
+        transform: translateY(-40%) scale(1.3) translateZ(0);
         z-index: 200;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
@@ -316,11 +327,11 @@ main {
     }
 
     .popular_movies {
-      margin-top: -4rem;
+      margin-top: -6rem;
 
       h3 {
         position: relative;
-        padding: 1rem 0;
+        padding: 3rem 0 1rem;
       }
 
       .wrapper {
@@ -350,6 +361,10 @@ main {
           overflow: hidden;
           margin: 0 -2rem;
           position: relative;
+
+          &.has_expanded {
+            overflow: unset;
+          }
         }
 
       }
