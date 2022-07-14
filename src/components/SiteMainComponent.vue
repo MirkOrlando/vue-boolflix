@@ -28,39 +28,35 @@
       <!-- /.jumbotron -->
       <div class="popular_movies">
         <div class="container">
-          <div class="wrapper">
-            <div class="next" @click="scrollToLeft()">NEXT</div>
-            <h3>I Film più popolari su Boolfix</h3>
-            <div class="row wrap g-1">
-              <div class="col-5 h-100 position-relative movie" :id="index != 0 && index % 5 === 0 ? index : ''"
-                v-for="(movie, index) in popMovies" :key="movie.id" @mouseover="hasExpanded()"
-                @mouseleave="hasShrink()">
-                <div class="card-movie dropdown">
-                  <img :src="linkImgPoster + movie.backdrop_path" alt="">
-                  <div class="dropdown-content">
-                    <div class="details">
-                      <h4>{{ movie.title }}</h4>
-                      <p>
-                        {{ movie.overview }}
-                      </p>
+          <h3>I Film più popolari su Boolfix</h3>
+          <div class="row g-1">
+            <div class="col-5 h-100 position-relative movie" :id="index != 0 && index % 5 === 0 ? index : ''"
+              v-for="(movie, index) in popMovies" :key="movie.id">
+              <div class="card-movie dropdown">
+                <img :src="linkImgPoster + movie.backdrop_path" alt="">
+                <div class="dropdown-content">
+                  <div class="details">
+                    <h4>{{ movie.title }}</h4>
+                    <p>
+                      {{ movie.overview }}
+                    </p>
+                  </div>
+                  <div class="metadata">
+                    <div class="genre">
+                      <strong>Genre: </strong>
+                      <span>Action</span>
                     </div>
-                    <div class="metadata">
-                      <div class="genre">
-                        <strong>Genre: </strong>
-                        <span>Action</span>
-                      </div>
-                      <div class="language">
-                        <strong>Original Language: </strong>
-                        <span>Eng</span>
-                      </div>
-                      <div class="vote">
-                        <strong>Rating: </strong>
-                        <span>8/10</span>
-                      </div>
-                      <div class="cast">
-                        <strong>Cast: </strong>
-                        <span>Robert Downey Jr.</span>
-                      </div>
+                    <div class="language">
+                      <strong>Original Language: </strong>
+                      <span>Eng</span>
+                    </div>
+                    <div class="vote">
+                      <strong>Rating: </strong>
+                      <span>8/10</span>
+                    </div>
+                    <div class="cast">
+                      <strong>Cast: </strong>
+                      <span>Robert Downey Jr.</span>
                     </div>
                   </div>
                 </div>
@@ -118,19 +114,6 @@ export default {
         //console.log(state.detailsText, "scroll");
       }
     },
-    scrollToLeft() {
-      console.log(document.querySelector('.popular_movies .container').getBoundingClientRect().width)
-      const containerLenght = document.querySelector('.popular_movies .container').getBoundingClientRect().width;
-      //const gap = 0.5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
-      console.log('next');
-      //scrollIntoView({ behavior: "smooth", inline: "start" });
-      //const movieColLength = document.querySelector('.movie').getBoundingClientRect().width;
-      //const lengthToScroll = movieColLength * 5 + gap * 4;
-      const lengthToScroll = containerLenght;
-      console.log(lengthToScroll);
-      document.querySelector('.popular_movies .row').scrollBy({ top: 0, left: lengthToScroll, behavior: "smooth" })
-      this.wrapClasses.margin_row_left = true
-    },
     getPopMovies() {
       axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US&page=1')
         .then((response) => {
@@ -153,16 +136,6 @@ export default {
       //console.log(this.jumboData);
       this.jumboData.position = i + 1;
     },
-    hasExpanded() {
-      setTimeout(() => {
-        document.querySelector('.popular_movies .row').classList.add('has_expanded')
-      }, 500);
-    },
-    hasShrink() {
-      setTimeout(() => {
-        document.querySelector('.popular_movies .row').classList.remove('has_expanded')
-      }, 1500);
-    }
   },
   created() {
     this.getPopMovies();
@@ -205,25 +178,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.col-5 {
-  width: calc((100% - 5rem) / 5);
-  flex-shrink: 0;
-
-  &:first-child {
-    margin-left: 2rem;
-  }
-
-  &:last-child {
-    margin-right: 2rem;
-  }
-}
-
 main {
   min-height: calc(100vh - 80.67px);
   background-color: $darkestColor;
   color: $lightestColor;
 
   .init_message {
+    .col-5 {
+      width: calc((100% - 1rem) / 5);
+    }
+
     .jumbotron {
       position: relative;
 
@@ -304,6 +268,8 @@ main {
 
       .dropdown-content {
         position: absolute;
+        box-shadow: 0px 3px 15px 3px #00000082;
+        border-bottom: 1px solid black;
         height: 80%;
         overflow-y: auto;
         font-size: 0.75rem;
@@ -327,46 +293,12 @@ main {
     }
 
     .popular_movies {
+      position: relative;
       margin-top: -6rem;
+      background: linear-gradient(to bottom, transparent, #141414 6rem);
 
       h3 {
-        position: relative;
         padding: 3rem 0 1rem;
-      }
-
-      .wrapper {
-        position: relative;
-
-        .next {
-          position: absolute;
-          right: -2rem;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          background-color: #14141499;
-          z-index: 100;
-          padding: 0.5rem;
-          opacity: 0;
-          transition: opacity 250ms;
-        }
-
-        &:hover {
-          .next {
-            opacity: 1;
-          }
-        }
-
-        .wrap {
-          flex-wrap: nowrap;
-          overflow: hidden;
-          margin: 0 -2rem;
-          position: relative;
-
-          &.has_expanded {
-            overflow: unset;
-          }
-        }
-
       }
     }
   }
