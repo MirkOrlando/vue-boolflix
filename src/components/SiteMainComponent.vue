@@ -30,7 +30,8 @@
         <div class="container">
           <h3>I Film più popolari su Boolfix</h3>
           <div class="row g-1">
-            <div class="col-5 h-100 position-relative movie" :id="index != 0 && index % 5 === 0 ? index : ''"
+            <div class="col-5 h-100 position-relative movie"
+              :class="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
               v-for="(movie, index) in popMovies" :key="movie.id">
               <div class="card-movie dropdown">
                 <img :src="linkImgPoster + movie.backdrop_path" alt="">
@@ -68,7 +69,7 @@
       <!-- /.popular_movies -->
     </div>
     <Loading v-else-if="isLoading && !success" />
-    <div class="container" v-else>
+    <div class="search container" v-else>
       <div class="row">
         <h2 v-if="showMovies.length > 0">Movies:</h2>
         <MovieCard :movie="movie" v-for="movie in showMovies" :key="movie.id" @onposter="hasToScroll" />
@@ -280,7 +281,7 @@ main {
       }
 
       &:hover {
-        transform: translateY(-40%) scale(1.3) translateZ(0);
+        transform: translateY(-40%) scale(1.5);
         z-index: 200;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
@@ -288,8 +289,18 @@ main {
           opacity: 1;
         }
       }
+    }
 
+    .left {
+      .dropdown:hover {
+        transform: translateY(-40%) scale(1.5) translatex(16.5%);
+      }
+    }
 
+    .right {
+      .dropdown:hover {
+        transform: translateY(-40%) scale(1.5) translatex(-16.5%);
+      }
     }
 
     .popular_movies {
@@ -307,5 +318,9 @@ main {
     width: 100%;
     margin-top: 1rem;
   }
+}
+
+.search {
+  padding-top: 5rem;
 }
 </style>

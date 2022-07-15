@@ -16,15 +16,21 @@ export default {
 <style lang="scss" scoped>
 /* loading */
 .loading-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-top: 1rem;
+
   [class^="circle"] {
     border-radius: 50%;
     aspect-ratio: 1/1;
   }
+
   .circle_bg {
     margin: 1rem;
     background-color: #3a4242;
@@ -33,6 +39,7 @@ export default {
     justify-content: center;
     align-items: center;
     animation: getBigger 2s linear infinite;
+
     .circle_sm {
       background-color: #212121;
       width: 40px;
@@ -51,6 +58,7 @@ export default {
     transform: scale(1);
   }
 }
+
 @keyframes getBigger {
   50% {
     transform: scale(1.3);
