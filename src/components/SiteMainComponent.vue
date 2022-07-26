@@ -7,7 +7,7 @@
           <div class="container">
             <div class="details">
               <h1>{{ jumboData.title }}</h1>
-              <h4 v-if="jumboData.position <= 5">
+              <h4 v-if="jumboData.position <= 10">
                 <span class="top-10">
                   <small>Top</small>
                   <small>10</small>
@@ -121,9 +121,41 @@ export default {
           //console.log(response);
           this.popMovies = response.data.results;
           this.getRandomJumbo();
+          /*           console.log(this.popMovies);
+                    if (this.popMovies) {
+                      this.getCastMovie()
+                    } */
         })
         .catch((e) => { console.log(e); })
     },
+    /*     getCastMovie() {
+          for (let i = 0; i < this.popMovies.length; i++) {
+            const movie = this.popMovies[i];
+            axios
+              .get(
+                `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=d755a2b665e5b254648b51fb19699f56`
+              )
+              .then((response) => {
+                //console.log(response);
+                const cast = [];
+                for (let i = 0; i < 5; i++) {
+                  if (response.data.cast.length !== 0 && response.data.cast[i]) {
+                    cast.push(response.data.cast[i]);
+                  }
+                }
+                //console.log(response);
+                //console.log(cast);
+                this.$set(this.movies[i], "cast", cast);
+                //console.log(movie);
+    
+                //console.log(movie.cast);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        }, */
+
     getRandomJumbo() {
       //console.log(this.popMovies.length);
       let i;

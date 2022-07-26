@@ -74,6 +74,7 @@ footer {
   background-color: $darkestColor;
   color: grey;
   padding-top: 5rem;
+  position: relative;
 
   .social-links {
     display: flex;
