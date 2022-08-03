@@ -26,6 +26,9 @@
 }
 
 .col-5 {
-    width: calc(100% / 5);
+    width: calc((100% - 1rem) / 5);
+
+    /*     width: calc(100% / 5);
     flex-shrink: 0;
+ */
 }

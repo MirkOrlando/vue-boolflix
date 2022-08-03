@@ -4,14 +4,7 @@
       <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
     </div>
     <div class="input" ref="input">
-      <input
-        type="text"
-        class="input"
-        placeholder="Search something..."
-        ref="text"
-        v-model="query"
-        @keyup="callAPI"
-      />
+      <input type="text" class="input" placeholder="Search something..." ref="text" v-model="query" @keyup="callAPI" />
     </div>
   </div>
 </template>
@@ -176,7 +169,7 @@ export default {
             //console.log(movie.cast);
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
       }
       this.loadingCastMovies = false;
@@ -203,7 +196,7 @@ export default {
             //console.log(tvShow.cast);
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
       }
     },
@@ -231,7 +224,7 @@ export default {
             //console.log(movie);
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
       }
       this.loadingGenreMovies = false;
@@ -260,7 +253,7 @@ export default {
             //console.log(movie);
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
         this.loadingGenreTvShows = false;
       }
@@ -275,9 +268,13 @@ export default {
         axios
           .get(this.getFullLinkAPIMovies())
           .then((response) => {
-            console.log(response);
+            //console.log(response);
             //console.log(response.data.results);
             this.movies = response.data.results;
+            for (let i = 0; i < this.movies.length; i++) {
+              const movie = this.movies[i];
+              this.$set(movie, 'index', i)
+            }
             //console.log(this.movies);
             state.movies = this.movies;
             //console.log(state.movies);
@@ -299,7 +296,7 @@ export default {
         axios
           .get(this.getFullLinkAPITvShows())
           .then((response) => {
-            console.log(response);
+            //console.log(response);
             //console.log(response.data.results);
             this.tvShows = response.data.results;
             state.tvShows = this.tvShows;
@@ -334,10 +331,12 @@ export default {
   outline: none;
   border: none;
   overflow: hidden;
+
   &.active {
     width: 330px;
     border: 1px solid $lightestColor;
   }
+
   .icon {
     display: flex;
     justify-content: center;
@@ -350,6 +349,7 @@ export default {
     /*     padding: 0.5rem;
     border: none; */
   }
+
   .input {
     position: relative;
     width: 0px;
@@ -357,9 +357,11 @@ export default {
     background-color: transparent;
     color: $lightestColor;
     transition: width 250ms linear;
+
     &.active {
       width: 300px;
     }
+
     input {
       position: absolute;
       padding: 0.5rem;
@@ -367,12 +369,14 @@ export default {
       width: 100%;
       height: 100%;
       border: none;
+
       &:focus-visible {
         outline: none;
       }
     }
   }
 }
+
 /* .search:focus-within button,
 .search:focus-within input {
   border: 1px solid $lightestColor;

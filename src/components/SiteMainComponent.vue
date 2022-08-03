@@ -34,7 +34,7 @@
               :class="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
               v-for="(movie, index) in popMovies" :key="movie.id">
               <div class="card-movie dropdown">
-                <img :src="linkImgPoster + movie.backdrop_path" alt="">
+                <img :src="linkImgPoster + movie.backdrop_path" :alt="movie.title + 'poster'">
                 <div class="dropdown-content">
                   <div class="details">
                     <h4>{{ movie.title }}</h4>
@@ -81,9 +81,11 @@
     </div>
     <Loading v-else-if="isLoading && !success" />
     <div class="search container" v-else>
-      <div class="row">
+      <div class="row g-1">
         <h2 v-if="showMovies.length > 0">Movies:</h2>
-        <MovieCard :movie="movie" v-for="movie in showMovies" :key="movie.id" @onposter="hasToScroll" />
+        <MovieCard :movie="movie" :link="linkImgPoster"
+          :direction="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
+          v-for="(movie, index) in showMovies" :key="movie.id" @onposter="hasToScroll" />
         <h2 v-if="showTvShows.length > 0">Tv Shows:</h2>
         <TvShowCard :tvShow="tvShow" v-for="tvShow in showTvShows" :key="tvShow.id" @onposter="hasToScroll" />
       </div>
@@ -224,7 +226,7 @@ export default {
             console.log(error);
           });
       });
-      console.log(object);
+      //console.log(object);
     },
     getRandomJumbo() {
       //console.log(this.popMovies.length);
@@ -288,9 +290,6 @@ main {
   color: $lightestColor;
 
   .init_message {
-    .col-5 {
-      width: calc((100% - 1rem) / 5);
-    }
 
     .jumbotron {
       position: relative;
@@ -357,52 +356,6 @@ main {
             }
           }
         }
-      }
-    }
-
-    .dropdown {
-      position: relative;
-      z-index: 0;
-      transform: translateY(0px);
-      transition: all 1000ms 500ms;
-
-      img {
-        display: block;
-      }
-
-      .dropdown-content {
-        position: absolute;
-        box-shadow: 0px 3px 15px 3px #00000082;
-        border-bottom: 1px solid black;
-        height: 80%;
-        overflow-y: auto;
-        font-size: 0.75rem;
-        opacity: 0;
-        background-color: $darkestColor;
-        padding: 0.5rem;
-        transition: all 1000ms 500ms;
-      }
-
-      &:hover {
-        transform: translateY(-40%) scale(1.5);
-        z-index: 200;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-
-        .dropdown-content {
-          opacity: 1;
-        }
-      }
-    }
-
-    .left {
-      .dropdown:hover {
-        transform: translateY(-40%) scale(1.5) translatex(16.5%);
-      }
-    }
-
-    .right {
-      .dropdown:hover {
-        transform: translateY(-40%) scale(1.5) translatex(-16.5%);
       }
     }
 
