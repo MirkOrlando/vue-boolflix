@@ -45,19 +45,30 @@
                   <div class="metadata">
                     <div class="genre">
                       <strong>Genre: </strong>
-                      <span>Action</span>
+                      <span v-for="genre in movie.genres" :key="genre.id">
+                        {{ genre.name }}
+                      </span>
                     </div>
                     <div class="language">
                       <strong>Original Language: </strong>
-                      <span>Eng</span>
+                      <span v-if="movie.thereIsFlag">
+                        <flag :iso="movie.flag_svg" />
+                      </span>
+                      <span v-else>{{ movie.original_language }}</span>
                     </div>
                     <div class="vote">
                       <strong>Rating: </strong>
-                      <span>8/10</span>
+                      <font-awesome-icon icon="fa-solid fa-star" v-for="star in getRating(movie.vote_average)"
+                        :key="star + 'f'" />
+
+                      <font-awesome-icon icon="fa-regular fa-star" v-for="star in 5 - getRating(movie.vote_average)"
+                        :key="star + 'e'" />
                     </div>
                     <div class="cast">
                       <strong>Cast: </strong>
-                      <span>Robert Downey Jr.</span>
+                      <span v-for="actor in movie.cast" :key="actor.cast_id">
+                        {{ actor.name }}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -115,47 +126,106 @@ export default {
         //console.log(state.detailsText, "scroll");
       }
     },
+    getLanguageFlagMovie(object) {
+      object.forEach((movie) => {
+        switch (true) {
+          case movie.original_language.toLowerCase() === "it":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "it";
+            break;
+          case movie.original_language.toLowerCase() === "fr":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "fr";
+            break;
+          case movie.original_language.toLowerCase() === "de":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "de";
+            break;
+          case movie.original_language.toLowerCase() === "en":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "gb";
+            break;
+          case movie.original_language.toLowerCase() === "es":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "es";
+            break;
+          case movie.original_language.toLowerCase() === "ru":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "ru";
+            break;
+          case movie.original_language.toLowerCase() === "cn":
+            movie.thereIsFlag = true;
+            movie.flag_svg = "cn";
+            break;
+
+          default:
+            break;
+        }
+      });
+    },
     getPopMovies() {
       axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US&page=1')
         .then((response) => {
           //console.log(response);
           this.popMovies = response.data.results;
+          this.getCastMovie(this.popMovies);
+          this.getGenreMovie(this.popMovies);
+          this.getLanguageFlagMovie(this.popMovies);
           this.getRandomJumbo();
-          /*           console.log(this.popMovies);
-                    if (this.popMovies) {
-                      this.getCastMovie()
-                    } */
         })
         .catch((e) => { console.log(e); })
     },
-    /*     getCastMovie() {
-          for (let i = 0; i < this.popMovies.length; i++) {
-            const movie = this.popMovies[i];
-            axios
-              .get(
-                `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=d755a2b665e5b254648b51fb19699f56`
-              )
-              .then((response) => {
-                //console.log(response);
-                const cast = [];
-                for (let i = 0; i < 5; i++) {
-                  if (response.data.cast.length !== 0 && response.data.cast[i]) {
-                    cast.push(response.data.cast[i]);
+    getCastMovie(object) {
+      object.forEach(movie => {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=d755a2b665e5b254648b51fb19699f56`
+          )
+          .then((response) => {
+            //console.log(response);
+            const cast = [];
+            for (let i = 0; i < 5; i++) {
+              if (response.data.cast.length !== 0 && response.data.cast[i]) {
+                cast.push(response.data.cast[i]);
+              }
+            }
+            this.$set(movie, 'cast', cast);
+            //console.log(movie);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      //console.log(object);
+    },
+    getGenreMovie(object) {
+      object.forEach(movie => {
+        axios
+          .get(
+            "https://api.themoviedb.org/3/genre/movie/list?api_key=d755a2b665e5b254648b51fb19699f56"
+          )
+          .then((response) => {
+            //console.log(response);
+            const genres = response.data.genres;
+            const genresToPush = [];
+            if (movie.genre_ids.length > 0) {
+              movie.genre_ids.forEach((genre_id) => {
+                genres.forEach((genre) => {
+                  if (genre_id === genre.id) {
+                    genresToPush.push(genre);
                   }
-                }
-                //console.log(response);
-                //console.log(cast);
-                this.$set(this.movies[i], "cast", cast);
-                //console.log(movie);
-    
-                //console.log(movie.cast);
-              })
-              .catch((error) => {
-                console.log(error);
+                });
               });
-          }
-        }, */
-
+            }
+            this.$set(movie, "genres", genresToPush);
+            //console.log(movie);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      console.log(object);
+    },
     getRandomJumbo() {
       //console.log(this.popMovies.length);
       let i;
@@ -174,6 +244,12 @@ export default {
     this.getPopMovies();
   },
   computed: {
+    getRating() {
+      return (number) => {
+        Math.ceil(number / 2)
+        return Math.ceil(number / 2);
+      };
+    },
     isSearching() {
       if (state.searching) {
         return true;
@@ -200,11 +276,6 @@ export default {
     },
     showTvShows() {
       return state.tvShows;
-    },
-    getRating() {
-      return (number) => {
-        return Math.ceil(number / 2);
-      };
     },
   },
 };
