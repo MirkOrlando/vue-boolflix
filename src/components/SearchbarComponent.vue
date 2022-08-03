@@ -169,7 +169,7 @@ export default {
             //console.log(movie.cast);
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
           });
       }
       this.loadingCastMovies = false;
@@ -196,7 +196,7 @@ export default {
             //console.log(tvShow.cast);
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
           });
       }
     },
@@ -224,7 +224,7 @@ export default {
             //console.log(movie);
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
           });
       }
       this.loadingGenreMovies = false;
@@ -253,7 +253,7 @@ export default {
             //console.log(movie);
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
           });
         this.loadingGenreTvShows = false;
       }
@@ -289,7 +289,7 @@ export default {
             state.statusMovies = this.statusMovies;
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
             this.errorMovies = `OPS ${error}`;
             state.errorMovies = this.errorMovies;
           });
@@ -311,7 +311,7 @@ export default {
             state.searching = false;
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
             this.errorTvShows = `OPS ${error}`;
             state.errorTvShows = this.errorTvShows;
           });

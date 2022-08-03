@@ -1,7 +1,8 @@
 <template>
   <div :class="`col-5 ${direction}`">
     <div class="card-movie dropdown">
-      <img :src="link + movie.backdrop_path" :alt="movie.title + ' poster'">
+      <img v-if="movie.backdrop_path" :src="link + movie.backdrop_path" :alt="movie.title + ' poster'">
+      <img v-else src="https://icons.iconarchive.com/icons/martz90/circle/512/video-camera-icon.png" alt="">
       <div class="dropdown-content">
         <div class="details">
           <h4>{{ movie.title }}</h4>
@@ -46,12 +47,6 @@
 <script>
 export default {
   name: "MovieCardComponent",
-  data() {
-    return {
-      right: null,
-      left: null,
-    }
-  },
   props: {
     movie: Object,
     link: String,

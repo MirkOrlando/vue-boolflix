@@ -85,9 +85,11 @@
         <h2 v-if="showMovies.length > 0">Movies:</h2>
         <MovieCard :movie="movie" :link="linkImgPoster"
           :direction="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
-          v-for="(movie, index) in showMovies" :key="movie.id" @onposter="hasToScroll" />
+          v-for="(movie, index) in showMovies" :key="movie.id" />
         <h2 v-if="showTvShows.length > 0">Tv Shows:</h2>
-        <TvShowCard :tvShow="tvShow" v-for="tvShow in showTvShows" :key="tvShow.id" @onposter="hasToScroll" />
+        <TvShowCard :tvShow="tvShow" :link="linkImgPoster"
+          :direction="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
+          v-for="(tvShow, index) in showTvShows" :key="tvShow.id" />
       </div>
     </div>
   </main>
@@ -118,16 +120,6 @@ export default {
     };
   },
   methods: {
-    hasToScroll() {
-      //console.log(state.detailsWrapper, state.detailsText);
-      if (
-        state.detailsText.clientHeight + 10 >
-        state.detailsWrapper.clientHeight
-      ) {
-        state.detailsText.classList.add("scroll");
-        //console.log(state.detailsText, "scroll");
-      }
-    },
     getLanguageFlagMovie(object) {
       object.forEach((movie) => {
         switch (true) {
