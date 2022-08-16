@@ -50,8 +50,8 @@ export default {
       window.addEventListener("scroll", this.handleWindowScroll);
     },
     handleWindowScroll() {
-      console.log('scrolling');
-      console.log(window.scrollY);
+      //console.log('scrolling');
+      //console.log(window.scrollY);
       if (window.scrollY > 0) {
         this.backgroundDark = true
       } else {

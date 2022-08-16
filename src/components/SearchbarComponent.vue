@@ -5,6 +5,9 @@
     </div>
     <div class="input" ref="input">
       <input type="text" class="input" placeholder="Search something..." ref="text" v-model="query" @keyup="callAPI" />
+      <div class="pe_1 pointer" @click="deleteSearch()">
+        <font-awesome-icon icon="fa-solid fa-xmark" />
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +39,24 @@ export default {
     getActiveSearch() {
       this.$refs.search.classList.toggle("active");
       this.$refs.input.classList.toggle("active");
-      this.$refs.text.focus();
+      if (this.$refs.input.classList.value.includes('active') && this.$refs.search.classList.value.includes('active')) {
+        this.$refs.text.focus();
+      }
+      if (this.query > 0) {
+        this.callAPI
+      }
+    },
+    deleteSearch() {
+      this.query = "";
+      this.$refs.search.classList.remove("active");
+      this.$refs.input.classList.remove("active");
+      state.movies = null;
+      state.tvShows = null;
+      state.statusMovies = null;
+      state.statusTvShows = null;
+      state.searching = false;
+      state.loadingMovies = true;
+      state.loadingTvShows = true;
     },
     getFullLinkAPIMovies() {
       // &language=en-US&page=1&include_adult=false&query=i am
@@ -352,6 +372,8 @@ export default {
 
   .input {
     position: relative;
+    display: flex;
+    align-items: center;
     width: 0px;
     height: 40px;
     background-color: transparent;
@@ -363,9 +385,7 @@ export default {
     }
 
     input {
-      position: absolute;
       padding: 0.5rem;
-      top: 0;
       width: 100%;
       height: 100%;
       border: none;

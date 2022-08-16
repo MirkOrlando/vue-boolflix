@@ -1,75 +1,3 @@
-/* .card {
-    height: 100%;
-
-    .poster {
-        position: relative;
-        height: 100%;
-        transition: all 250ms linear;
-
-        img {
-            max-width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .details {
-            position: absolute;
-            top: 0;
-            padding: 1rem;
-            background-color: $darkestColor;
-            height: 100%;
-            width: 100%;
-            opacity: 0;
-            transition: all 500ms linear;
-            cursor: context-menu;
-            overflow: hidden;
-
-            .scroll_details {
-                transition: all 10s linear;
-            }
-
-            .title,
-            .original_title,
-            .language,
-            .vote,
-            .genre,
-            .cast,
-            .overview {
-                padding: 0.25rem 0;
-                border-bottom: 4px solid $liteDarkColor;
-
-                strong {
-                    color: #9e4349;
-                }
-
-                .fa-star {
-                    color: gold;
-                }
-
-                span::after {
-                    content: '- ';
-                }
-
-                span:last-child::after {
-                    content: '';
-                }
-            }
-        }
-
-        &:hover .scroll {
-            animation: autoScroll 20s 2s linear;
-        }
-
-        &:active .scroll {
-            animation-play-state: paused;
-        }
-
-        &:hover .details {
-            opacity: 0.9;
-        }
-    }
-} */
-
 .dropdown {
     position: relative;
     z-index: 0;
@@ -86,6 +14,7 @@
         box-shadow: 0px 3px 15px 3px #00000082;
         border-bottom: 1px solid black;
         height: 80%;
+        width: 100%;
         overflow-y: auto;
         font-size: 0.75rem;
         opacity: 0;
