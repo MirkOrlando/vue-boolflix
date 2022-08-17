@@ -12,14 +12,18 @@
                   <small>Top</small>
                   <small>10</small>
                 </span>
-                Oggi al n. {{ jumboData.position }} tra i più visti in Italia
+                #{{ jumboData.position }} in Movies Today
               </h4>
               <p>
                 {{ jumboData.overview }}
               </p>
               <div class="action">
-                <a href="#" class="btn btn-primary">Riproduci</a>
-                <a href="#" class="btn btn-secondary ml-1">Altre Info</a>
+                <a href="#" class="btn btn-primary">
+                  <font-awesome-icon icon="fa-solid fa-play" /> Play
+                </a>
+                <a href="#" class="btn btn-secondary ml-1">
+                  <font-awesome-icon icon="fa-solid fa-circle-info" /> More Info
+                </a>
               </div>
             </div>
           </div>
@@ -81,13 +85,13 @@
     </div>
     <Loading v-else-if="isLoading && !success || loadingLandigPage" />
     <div class="search container" v-else>
-      <h4>Ricerca per titolo: "{{ getWordSearched }}"</h4>
+      <h4>Searched by title: "{{ getWordSearched }}"</h4>
       <div class="row g-1">
         <h2 v-if="showMovies.length > 0">Movies:</h2>
         <MovieCard :movie="movie" :link="linkImgPoster"
           :direction="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
           v-for="(movie, index) in showMovies" :key="movie.id" />
-        <h2 v-if="showTvShows.length > 0">Tv Shows:</h2>
+        <h2 v-if="showTvShows.length > 0">TV Shows:</h2>
         <TvShowCard :tvShow="tvShow" :link="linkImgPoster"
           :direction="index = 0 || index % 5 === 0 ? 'left' : Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 9 || Number(index.toString().split('').reverse().join(',').slice(0, 1)) === 4 ? 'right' : ''"
           v-for="(tvShow, index) in showTvShows" :key="tvShow.id" />
@@ -159,7 +163,7 @@ export default {
       });
     },
     getPopMovies() {
-      axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&language=en-US&page=1')
+      axios.get('https://api.themoviedb.org/3/movie/popular?api_key=d755a2b665e5b254648b51fb19699f56&page=1')
         .then((response) => {
           //console.log(response);
           this.popMovies = response.data.results;
@@ -304,7 +308,7 @@ main {
         top: 0;
         height: 100%;
         width: 100%;
-        background: linear-gradient(45deg, black, transparent);
+        background: linear-gradient(145deg, black, transparent);
 
         .container {
           height: 100%;

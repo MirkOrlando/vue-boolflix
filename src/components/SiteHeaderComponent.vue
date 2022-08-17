@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      navItems: ["Home", "Serie Tv", "Movies", "Nuove Uscite", "La Mia Lista"],
+      navItems: ["Home", "TV Shows", "Movies", "New & Popular", "My List"],
       activeNavItem: 0,
       backgroundDark: null,
     };

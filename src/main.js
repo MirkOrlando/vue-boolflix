@@ -16,6 +16,8 @@ import { faMagnifyingGlass as fasSearch } from '@fortawesome/free-solid-svg-icon
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -25,7 +27,7 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* add icons to the library 👇 QUI AGGIUNGI IL NOME DELL'ICONA in camelCase*/
-library.add(fasStar, farStar, fasSearch, faXmark, faBell, faUser, faFacebookF, faInstagram, faTwitter, faYoutube)
+library.add(fasStar, farStar, fasSearch, faXmark, faBell, faUser, faPlay, faCircleInfo, faFacebookF, faInstagram, faTwitter, faYoutube)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
