@@ -59,6 +59,10 @@ export default {
       }
     },
     reset() {
+      state.query = "";
+      state.refs.search.classList.remove("active");
+      state.refs.input.classList.remove("active");
+      state.refs.text.value = "";
       state.movies = null;
       state.tvShows = null;
       state.statusMovies = null;

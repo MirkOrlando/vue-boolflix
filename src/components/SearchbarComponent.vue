@@ -36,6 +36,9 @@ export default {
     };
   },
   methods: {
+    getSearchbarDomElementState() {
+      state.refs = this.$refs
+    },
     getActiveSearch() {
       this.$refs.search.classList.toggle("active");
       this.$refs.input.classList.toggle("active");
@@ -285,6 +288,7 @@ export default {
         state.statusMovies = null;
         state.statusTvShows = null;
         state.searching = true;
+        state.query = this.query;
         axios
           .get(this.getFullLinkAPIMovies())
           .then((response) => {
@@ -338,6 +342,9 @@ export default {
         //this.query = "";
       }
     },
+  },
+  mounted() {
+    this.getSearchbarDomElementState();
   },
 };
 </script>

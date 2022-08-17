@@ -81,6 +81,7 @@
     </div>
     <Loading v-else-if="isLoading && !success" />
     <div class="search container" v-else>
+      <h4>Ricerca per titolo: "{{ getWordSearched }}"</h4>
       <div class="row g-1">
         <h2 v-if="showMovies.length > 0">Movies:</h2>
         <MovieCard :movie="movie" :link="linkImgPoster"
@@ -238,6 +239,9 @@ export default {
     this.getPopMovies();
   },
   computed: {
+    getWordSearched() {
+      return state.query;
+    },
     getRating() {
       return (number) => {
         Math.ceil(number / 2)
