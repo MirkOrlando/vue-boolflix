@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="init_message" v-if="!isSearching && !success">
+    <div class="init_message" v-if="!isSearching && !success && !loadingLandigPage">
       <div class="jumbotron">
         <img :src="linkImgPoster + jumboData.backdrop_path" alt="">
         <div class="jumbo-text">
@@ -79,7 +79,7 @@
       </div>
       <!-- /.popular_movies -->
     </div>
-    <Loading v-else-if="isLoading && !success" />
+    <Loading v-else-if="isLoading && !success || loadingLandigPage" />
     <div class="search container" v-else>
       <h4>Ricerca per titolo: "{{ getWordSearched }}"</h4>
       <div class="row g-1">
@@ -112,7 +112,7 @@ export default {
   },
   data() {
     return {
-      loading: null,
+      loadingLandigPage: true,
       error: null,
       movies: null,
       popMovies: null,
@@ -167,6 +167,7 @@ export default {
           this.getGenreMovie(this.popMovies);
           this.getLanguageFlagMovie(this.popMovies);
           this.getRandomJumbo();
+          this.loadingLandigPage = false
         })
         .catch((e) => { console.log(e); })
     },
